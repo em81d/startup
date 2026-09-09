@@ -39,7 +39,7 @@ I am going to use the required technologies in the following ways.
 - **React** - React components allow users to switch between the HTML pages via buttons. Vocab words on the progress page are react components as well, so when you click on them it shows the definition and changes the color depending on how well you have mastered it.  
 - **Service** - The app will connect to several external APIs, including Gemini or GPT as the LLM providing text, and ElevenLabs to provide the text-to-speech service. The ElevenLabs v2 model is cheap and supports 29 languages. It can be accessed here: [Link](https://elevenlabs.io/docs/overview/models).
 - **DB/Login** - The authentication page will connect to the database through the backend to securely store logins, alongside progress scores and transcripts of that user's conversations. 
-- **WebSocket** - Description here
+- **WebSocket** - ElevenLabs uses WebSocket to facilitate the live communication between the user and the LLM. That is how real-time conversation is made possible. I could also implement a leaderboard that shows other users who have practiced today based on participation levels that updates in real-time using WebSocket.
 
 ## 🚀 Specification Deliverable
 
