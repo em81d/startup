@@ -36,7 +36,7 @@ I am going to use the required technologies in the following ways.
 
 - **HTML** - This will provide the backbone of the page. There will be 4 pages: a login/signup page, a progress page that shows the skills they have mastered and in progress, a chat page that allows them to talk live with an AI, and a challenge page that shows a daily task.
 - **CSS** - CSS will implement the light theme and dark theme, as well as the other color scheme elements. Buttons will have my signature animated hover gradient to make the site feel high-tech and interactive.
-- **React** - Description here
+- **React** - React components allow users to switch between the HTML pages via buttons. Vocab words on the progress page are react components as well, so when you click on them it shows the definition and changes the color depending on how well you have mastered it.  
 - **Service** - Description here
 - **DB/Login** - Description here
 - **WebSocket** - Description here
