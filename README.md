@@ -7,7 +7,7 @@ This application aims to help users learn a new language through dynamic practic
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Everybody knows that we learn languages best by chatting with real speakers - not textbooks, not repetitive multiple choice questions. Organic conversations with real feedback and real participation are effective but often hard to find, though. So how about we create them? The most current AI-driven Text-to-Speech and Speech-to-Speech models are proficient in dozens of languages already, and provide the perfect foundation for a live, intelligent chat partner who can really help you learn. Chatty app is the first place to implement this. No need to study, no need to stress, just chat :)
 
 ### Design
 
