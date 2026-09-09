@@ -11,9 +11,9 @@ Everybody knows that we learn languages best by chatting with real speakers - no
 
 ### Design
 
-![Design image](a.jpg)
-![Design image](b.jpg)
-![Design image](c.jpg)
+![Design image](a.jpeg)
+![Design image](b.jpeg)
+![Design image](c.jpeg)
 
 These sketches show three of the main pages of the application.
 
