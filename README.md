@@ -24,16 +24,18 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Authentication allows users to securely create accounts and access information from previous sessions
+- Chat feature backed by an LLM and a speech-to-speech provider enables users to speak and listen live and get live feedback 
+- Database stores auth data as well as learning progress, including vocab and grammar skills, for each user
+- Different feedback levels allow users to customize whether they want a low-stakes practice experience or a rigorous constructive criticism session
+- Dark theme and light theme are offered to improve visual experience
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
+- **HTML** - This will provide the backbone of the page. There will be 4 pages: a login/signup page, a progress page that shows the skills they have mastered and in progress, a chat page that allows them to talk live with an AI, and a challenge page that shows a daily task.
+- **CSS** - CSS will implement the light theme and dark theme, as well as the other color scheme elements. Buttons will have my signature animated hover gradient to make the site feel high-tech and interactive.
 - **React** - Description here
 - **Service** - Description here
 - **DB/Login** - Description here
