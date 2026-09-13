@@ -20,6 +20,13 @@ my account comes with the $100 of free credits, not the $200, so monitor and mak
 
 exposes SSH, HTTP, and HTTPS so I can access the server with any of the three (tested SSH, that gives you the internal stuff, and tested HTTP, which gives you the page in your browser, but HTTPS has to wait until caddy is set up)
 
+Notes from reading:
+- most major companies have multiple ips associated  with  
+a given domain for redundancy
+- domain names listed in domain name registry
+- possible list of top level domains controlled by 
+one of the internet's governing boards
+
 ## HTML
 
 Interesting things I have learned about HTML
