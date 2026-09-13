@@ -26,6 +26,19 @@ a given domain for redundancy
 - domain names listed in domain name registry
 - possible list of top level domains controlled by 
 one of the internet's governing boards
+- subdomains resolve to different IPs
+- use whois in the console to see who owns a domain
+- including contact info!
+- an A record maps domain to IP address
+- a CNAME record maps a domain name to another domain
+name (aliases, either can be used)
+- when you enter a domain name in browser it checks if already cached,
+if not it contacts a DNS server, if the DNS server
+doesn't have it cached, it contacts an authoritative name server
+- caching is clunky but more efficient in the long run
+- you can set a max amount of time for it to be cached
+- this helps if you need to update domain info
+
 
 ## HTML
 
