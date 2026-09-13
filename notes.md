@@ -18,6 +18,8 @@ mine is using t3 micro which should be plenty big for this project.
 
 my account comes with the $100 of free credits, not the $200, so monitor and make sure the billing info works
 
+exposes SSH, HTTP, and HTTPS so I can access the server with any of the three (tested SSH, that gives you the internal stuff, and tested HTTP, which gives you the page in your browser, but HTTPS has to wait until caddy is set up)
+
 ## HTML
 
 Interesting things I have learned about HTML
