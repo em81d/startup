@@ -39,7 +39,11 @@ doesn't have it cached, it contacts an authoritative name server
 - you can set a max amount of time for it to be cached
 - this helps if you need to update domain info
 - buying a domain from a private party is way more expensive so think of a weird name
+- you need a domain name (not just an IP) to use HTTPS
+- do this through AWS Route 53, lasts a year
 
+- DNS registration not working for now :(
+left off at Manage your DNS records
 
 ## HTML
 
