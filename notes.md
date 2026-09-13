@@ -38,8 +38,7 @@ doesn't have it cached, it contacts an authoritative name server
 - caching is clunky but more efficient in the long run
 - you can set a max amount of time for it to be cached
 - this helps if you need to update domain info
-- buying a domain from a private party is way more expensive 
-so think of a weird name
+- buying a domain from a private party is way more expensive so think of a weird name
 
 
 ## HTML
