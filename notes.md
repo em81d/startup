@@ -13,7 +13,8 @@ Here are my notes for the course!
 
 ## AWS
 
-Interesting things I have learned about AWS
+My server's ip is 3.88.3.121 and the elastic ip is 44.199.32.153 
+mine is using t3 micro which should be plenty big for this project.
 
 ## HTML
 
