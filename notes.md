@@ -45,6 +45,8 @@ doesn't have it cached, it contacts an authoritative name server
 - ip address no longer works, just domain name
 - used porkbun to buy domain and linked it to my route53 hosted zone
 
+- completed all tasks - rented EC2 server, leased domain name, and made available online with HTTPS
+
 ## HTML
 
 Interesting things I have learned about HTML
