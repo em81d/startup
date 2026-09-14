@@ -42,8 +42,8 @@ doesn't have it cached, it contacts an authoritative name server
 - you need a domain name (not just an IP) to use HTTPS
 - do this through AWS Route 53, lasts a year
 
-- DNS registration not working for now :(
-left off at Manage your DNS records
+- ip address no longer works, just domain name
+- used porkbun to buy domain and linked it to my route53 hosted zone
 
 ## HTML
 
