@@ -51,6 +51,11 @@ doesn't have it cached, it contacts an authoritative name server
 
 Interesting things I have learned about HTML
 
+- use img, not image, although it seems <image> also works
+- image tags should be self-closing
+- <b> is to <div> what <span> is to <p>
+- <th> or <td> elements are nested within <tr> elements, which are nested within the <table> element
+
 ## React
 
 Interesting things I have learned about React
