@@ -62,6 +62,8 @@ Interesting things I have learned about HTML
 - though JS can do most anything now, still use good practices with form for the sake of accessibility
 - some elements like email have a pattern attribute that will check if an input fits a certain reg. expression in order to be valid
 
+- use ./deployFiles.sh -k ~/prod.pem -h <domainname> -s <nameoftheservicedeployingto>
+
 ## React
 
 Interesting things I have learned about React
