@@ -56,6 +56,12 @@ Interesting things I have learned about HTML
 - <b> is to <div> what <span> is to <p>
 - <th> or <td> elements are nested within <tr> elements, which are nested within the <table> element
 
+- form element used to be very important for javascript as it was the only way to send user info back to server
+- other input types include <select> for a selection dropdown, <option> for a selectable option, <meter> they choose from a range of values
+- form needs attributes action (defines url to send to) and method (specifies http method to use)
+- though JS can do most anything now, still use good practices with form for the sake of accessibility
+- some elements like email have a pattern attribute that will check if an input fits a certain reg. expression in order to be valid
+
 ## React
 
 Interesting things I have learned about React
