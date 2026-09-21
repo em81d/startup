@@ -69,10 +69,10 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Links** - includes a link to my github repo in the footer of each page, and links to each of the other pages in the nav.
 - [x] **Text** - Text introduces the application on the homepage, and explains the function of each individual page.
 - [x] **3rd party API placeholder** - The button on the chat page, along with the login and sign up buttons, represent places where calls will be made to the ElevenLabs API and database.
-- [x] **Images** - I did not complete this part of the deliverable.
-- [x] **Login placeholder** - I did not complete this part of the deliverable.
-- [x] **DB data placeholder** - I did not complete this part of the deliverable.
-- [x] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **Images** - added my logo to the footer .
+- [x] **Login placeholder** - includes a placeholder for username and password text, and dummy sign up/log in buttons. 
+- [x] **DB data placeholder** - the "progress" tab shows sample vocab that will appear based on words that the user has learned, stored in the database.
+- [x] **WebSocket placeholder** - The part that uses websocket is the chat feature, which will be kicked off by pushing the button found in chat.html.
 
 ## 🚀 CSS deliverable
 
