@@ -7,35 +7,51 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Chat260</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="chat.html">Chat</a></li>
-          <li><a href="progress.html">Progress</a></li>
-        </ul>
-      </nav>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="site-title" href="index.html">Chat260</a>
+        <nav>
+          <ul class="site-nav">
+            <li><a class="nav-link" href="index.html">Home</a></li>
+            <li><a class="nav-link" href="login.html">Login</a></li>
+            <li><a class="nav-link nav-link-active" href="chat.html">Chat</a></li>
+            <li><a class="nav-link" href="progress.html">Progress</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <main>
+    <main class="page">
       <h2>Chat</h2>
 
-      <section>
-        <button type="button">Click to start conversation</button>
-        <p>
-          Things to focus on during this conversation: using past tense, talking
-          about professions
+      <section class="card mt-6 max-w-2xl">
+        <h3>Ready when you are</h3>
+        <p class="mt-2 text-mist-600">
+          Your bot picks up right where you left off.
         </p>
+        <button class="btn mt-5" type="button">Click to start conversation</button>
+      </section>
+
+      <section class="card card-accent mt-6 max-w-2xl">
+        <h3>Focus for this conversation</h3>
+        <ul class="mt-3 list-inside list-disc space-y-1 text-mist-700">
+          <li>Using past tense</li>
+          <li>Talking about professions</li>
+        </ul>
       </section>
     </main>
 
-    <footer>
-      <p>Thanks for using Chat260!</p>
-      <p>by Emeline MacJanet</p>
-      <img src="chatlogo.png" alt="Chat260 logo" width="100" />
-      <a href="https://github.com/em81d/startup">GitHub</a>
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="flex items-center gap-3">
+          <img src="chatlogo.png" alt="Chat260 logo" width="48" height="48" class="rounded-lg" />
+          <div>
+            <p class="font-medium text-mist-700">Thanks for using Chat260!</p>
+            <p>by Emeline MacJanet</p>
+          </div>
+        </div>
+        <a href="https://github.com/em81d/startup">GitHub</a>
+      </div>
     </footer>
 
     <script src="main.js"></script>

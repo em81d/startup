@@ -7,42 +7,52 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Chat260</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="chat.html">Chat</a></li>
-          <li><a href="progress.html">Progress</a></li>
-        </ul>
-      </nav>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="site-title" href="index.html">Chat260</a>
+        <nav>
+          <ul class="site-nav">
+            <li><a class="nav-link" href="index.html">Home</a></li>
+            <li><a class="nav-link nav-link-active" href="login.html">Login</a></li>
+            <li><a class="nav-link" href="chat.html">Chat</a></li>
+            <li><a class="nav-link" href="progress.html">Progress</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <main>
+    <main class="page">
       <h2>Login</h2>
 
-      <section>
-        <form>
+      <section class="card mt-6 max-w-sm">
+        <form class="space-y-4">
           <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="your@email.com" />
+            <label class="field-label" for="email">Email</label>
+            <input class="field-input" type="email" id="email" name="email" placeholder="your@email.com" />
           </div>
           <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="password" />
+            <label class="field-label" for="password">Password</label>
+            <input class="field-input" type="password" id="password" name="password" placeholder="password" />
           </div>
-          <button type="submit">Login</button>
-          <button type="submit">Sign Up</button>
+          <div class="flex gap-3 pt-2">
+            <button class="btn" type="submit">Login</button>
+            <button class="btn-secondary" type="submit">Sign Up</button>
+          </div>
         </form>
       </section>
     </main>
 
-    <footer>
-      <p>Thanks for using Chat260!</p>
-      <p>by Emeline MacJanet</p>
-      <img src="chatlogo.png" alt="Chat260 logo" width="100" />
-      <a href="https://github.com/em81d/startup">GitHub</a>
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="flex items-center gap-3">
+          <img src="chatlogo.png" alt="Chat260 logo" width="48" height="48" class="rounded-lg" />
+          <div>
+            <p class="font-medium text-mist-700">Thanks for using Chat260!</p>
+            <p>by Emeline MacJanet</p>
+          </div>
+        </div>
+        <a href="https://github.com/em81d/startup">GitHub</a>
+      </div>
     </footer>
 
     <script src="main.js"></script>

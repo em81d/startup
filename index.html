@@ -7,40 +7,57 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Chat260</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="chat.html">Chat</a></li>
-          <li><a href="progress.html">Progress</a></li>
-        </ul>
-      </nav>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="site-title" href="index.html">Chat260</a>
+        <nav>
+          <ul class="site-nav">
+            <li><a class="nav-link nav-link-active" href="index.html">Home</a></li>
+            <li><a class="nav-link" href="login.html">Login</a></li>
+            <li><a class="nav-link" href="chat.html">Chat</a></li>
+            <li><a class="nav-link" href="progress.html">Progress</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <main>
-      <h2>Learn a language by actually talking</h2>
-      <p>
-        Chat260 helps you learn a new language through dynamic practice and
-        conversation. Chat with a personalized bot that introduces new words in
-        your target language, stores your progress, and gives you tasks at the
-        right difficulty. Review the vocabulary you have learned and answer short
-        reading comprehension questions that match where you are in the process.
-      </p>
-      <p>
-        We learn languages best by chatting with real speakers &mdash; not
-        textbooks, not repetitive multiple choice questions. Those conversations
-        are hard to find, so let's create them. No need to study, no need to
-        stress, just chat :)
-      </p>
+    <main class="page">
+      <h2 class="max-w-2xl">Learn a language by actually talking</h2>
+
+      <div class="mt-6 max-w-2xl space-y-4 text-lg leading-relaxed">
+        <p>
+          Chat260 helps you learn a new language through dynamic practice and
+          conversation. Chat with a personalized bot that introduces new words in
+          your target language, stores your progress, and gives you tasks at the
+          right difficulty. Review the vocabulary you have learned and answer
+          short reading comprehension questions that match where you are in the
+          process.
+        </p>
+        <p>
+          We learn languages best by chatting with real speakers &mdash; not
+          textbooks, not repetitive multiple choice questions. Those
+          conversations are hard to find, so let's create them. No need to study,
+          no need to stress, just chat :)
+        </p>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a class="btn" href="chat.html">Start chatting</a>
+        <a class="btn-secondary" href="progress.html">See your progress</a>
+      </div>
     </main>
 
-    <footer>
-      <p>Thanks for using Chat260!</p>
-      <p>by Emeline MacJanet</p>
-      <img src="chatlogo.png" alt="Chat260 logo" width="100" />
-      <a href="https://github.com/em81d/startup">GitHub</a>
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="flex items-center gap-3">
+          <img src="chatlogo.png" alt="Chat260 logo" width="48" height="48" class="rounded-lg" />
+          <div>
+            <p class="font-medium text-mist-700">Thanks for using Chat260!</p>
+            <p>by Emeline MacJanet</p>
+          </div>
+        </div>
+        <a href="https://github.com/em81d/startup">GitHub</a>
+      </div>
     </footer>
 
     <script src="main.js"></script>

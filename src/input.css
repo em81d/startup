@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+
+/* ---- Theme tokens -------------------------------------------------------
+   Named aliases so pages reference intent (accent / surface) instead of a
+   specific shade. Change these and the whole site follows.
+   -------------------------------------------------------------------- */
+@theme {
+  --color-accent: var(--color-teal-700);
+  --color-accent-hover: var(--color-teal-600);
+  --color-accent-soft: var(--color-teal-50);
+  --color-accent-2: var(--color-violet-100);
+  --color-accent-2-soft: var(--color-violet-50);
+}
+
+@layer base {
+  body {
+    @apply bg-mist-50 text-mist-800 font-sans antialiased flex min-h-screen flex-col;
+  }
+
+  h2 {
+    @apply text-mist-900 text-3xl font-bold tracking-tight;
+  }
+
+  h3 {
+    @apply text-mist-900 text-xl font-semibold;
+  }
+
+  a {
+    @apply text-teal-700 underline-offset-2 hover:underline;
+  }
+}
+
+@layer components {
+  /* ---- Header / nav ---- */
+  .site-header {
+    @apply bg-accent text-white shadow-sm;
+  }
+
+  .site-header-inner {
+    @apply mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-4;
+  }
+
+  .site-title {
+    @apply text-2xl font-bold tracking-tight text-white no-underline hover:no-underline;
+  }
+
+  .site-nav {
+    @apply flex flex-wrap items-center gap-1;
+  }
+
+  .nav-link {
+    @apply rounded-md px-3 py-2 text-sm font-medium text-teal-50 no-underline transition-colors hover:bg-accent-hover hover:text-white hover:no-underline;
+  }
+
+  .nav-link-active {
+    @apply bg-teal-800 text-white;
+  }
+
+  /* ---- Layout ---- */
+  .page {
+    @apply mx-auto w-full max-w-5xl flex-1 px-6 py-10;
+  }
+
+  .card {
+    @apply rounded-xl border border-mist-200 bg-white p-6 shadow-sm;
+  }
+
+  .card-accent {
+    @apply border-violet-200 bg-accent-2-soft;
+  }
+
+  /* ---- Controls ---- */
+  .btn {
+    @apply inline-block cursor-pointer rounded-lg bg-accent px-5 py-2.5 font-medium text-white no-underline transition-colors hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  }
+
+  .btn-secondary {
+    @apply inline-block cursor-pointer rounded-lg border border-mist-300 bg-white px-5 py-2.5 font-medium text-mist-700 no-underline transition-colors hover:bg-mist-100;
+  }
+
+  .field-label {
+    @apply mb-1 block text-sm font-medium text-mist-700;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-mist-300 bg-white px-3 py-2 text-mist-900 placeholder:text-mist-400 focus:border-accent focus:ring-2 focus:ring-teal-200 focus:outline-none;
+  }
+
+  /* ---- Tables ---- */
+  .vocab-table {
+    @apply w-full border-collapse overflow-hidden rounded-lg text-left text-sm;
+  }
+
+  .vocab-table th {
+    @apply bg-accent-2 px-4 py-2 font-semibold text-mist-900;
+  }
+
+  .vocab-table td {
+    @apply border-t border-mist-200 px-4 py-2;
+  }
+
+  .vocab-table tbody tr:nth-child(even) {
+    @apply bg-mist-50;
+  }
+
+  /* ---- Footer ---- */
+  .site-footer {
+    @apply mt-auto border-t border-mist-200 bg-mist-100 text-mist-600;
+  }
+
+  .site-footer-inner {
+    @apply mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm;
+  }
+}

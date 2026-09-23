@@ -7,24 +7,26 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Chat260</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="chat.html">Chat</a></li>
-          <li><a href="progress.html">Progress</a></li>
-        </ul>
-      </nav>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="site-title" href="index.html">Chat260</a>
+        <nav>
+          <ul class="site-nav">
+            <li><a class="nav-link" href="index.html">Home</a></li>
+            <li><a class="nav-link" href="login.html">Login</a></li>
+            <li><a class="nav-link" href="chat.html">Chat</a></li>
+            <li><a class="nav-link nav-link-active" href="progress.html">Progress</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <main>
+    <main class="page">
       <h2>Progress</h2>
 
-      <section>
+      <section class="card mt-6">
         <h3>Words you know</h3>
-        <table>
+        <table class="vocab-table mt-4">
           <thead>
             <tr>
               <th>Spanish</th>
@@ -116,9 +118,9 @@
         </table>
       </section>
 
-      <section>
+      <section class="card mt-6">
         <h3>Words you are learning</h3>
-        <table>
+        <table class="vocab-table mt-4">
           <thead>
             <tr>
               <th>Spanish</th>
@@ -210,9 +212,9 @@
         </table>
       </section>
 
-      <section>
+      <section class="card mt-6">
         <h3>Future vocab</h3>
-        <table>
+        <table class="vocab-table mt-4">
           <thead>
             <tr>
               <th>Spanish</th>
@@ -306,11 +308,17 @@
 
     </main>
 
-    <footer>
-      <p>Thanks for using Chat260!</p>
-      <p>by Emeline MacJanet</p>
-      <img src="chatlogo.png" alt="Chat260 logo" width="100" />
-      <a href="https://github.com/em81d/startup">GitHub</a>
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="flex items-center gap-3">
+          <img src="chatlogo.png" alt="Chat260 logo" width="48" height="48" class="rounded-lg" />
+          <div>
+            <p class="font-medium text-mist-700">Thanks for using Chat260!</p>
+            <p>by Emeline MacJanet</p>
+          </div>
+        </div>
+        <a href="https://github.com/em81d/startup">GitHub</a>
+      </div>
     </footer>
 
     <script src="main.js"></script>
