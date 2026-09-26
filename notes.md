@@ -2,8 +2,8 @@
 
 Here are my notes for the course!
 
-- [My startup](https://startup.cs260.click)
-- [My simon](https://simon.cs260.click)
+- [My startup](https://startup.chat260.click)
+- [My simon](https://simon.chat260.click)
 
 ## Helpful links
 
@@ -63,6 +63,10 @@ Interesting things I have learned about HTML
 - some elements like email have a pattern attribute that will check if an input fits a certain reg. expression in order to be valid
 
 - use ./deployFiles.sh -k ~/prod.pem -h <domainname> -s <nameoftheservicedeployingto>
+
+- my CSS uses keyframes to animate some translucent circles as you scroll. I didn't know you could base keyframes off of scroll position, 
+not just time, but I'm glad you can because this is exactly what I was hoping for! Super cool
+
 
 ## React
 
