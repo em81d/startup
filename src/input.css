@@ -114,15 +114,24 @@
   }
 
   .vocab-table th {
-    @apply bg-accent-2 px-4 py-2 font-semibold text-mist-900;
+    @apply bg-violet-200 px-4 py-2 font-semibold text-mist-900;
   }
 
   .vocab-table td {
     @apply border-t border-mist-200 px-4 py-2;
   }
 
+  .vocab-table tbody tr {
+    @apply transition-colors;
+  }
+
   .vocab-table tbody tr:nth-child(even) {
     @apply bg-mist-50;
+  }
+
+  /* Comes after the striping rule so hover wins on even rows too */
+  .vocab-table tbody tr:hover {
+    @apply bg-violet-50;
   }
 
   /* ---- Footer ---- */

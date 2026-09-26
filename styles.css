@@ -61,7 +61,6 @@
     --default-mono-font-family: var(--font-mono);
     --color-accent: var(--color-teal-700);
     --color-accent-hover: var(--color-teal-600);
-    --color-accent-2: var(--color-violet-100);
     --color-accent-2-soft: var(--color-violet-50);
   }
 }
@@ -612,7 +611,7 @@
     line-height: var(--tw-leading, var(--text-sm--line-height));
   }
   .vocab-table th {
-    background-color: var(--color-accent-2);
+    background-color: var(--color-violet-200);
     padding-inline: calc(var(--spacing) * 4);
     padding-block: calc(var(--spacing) * 2);
     --tw-font-weight: var(--font-weight-semibold);
@@ -626,8 +625,16 @@
     padding-inline: calc(var(--spacing) * 4);
     padding-block: calc(var(--spacing) * 2);
   }
+  .vocab-table tbody tr {
+    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
   .vocab-table tbody tr:nth-child(even) {
     background-color: var(--color-mist-50);
+  }
+  .vocab-table tbody tr:hover {
+    background-color: var(--color-violet-50);
   }
   .site-footer {
     margin-top: auto;
