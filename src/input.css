@@ -69,6 +69,28 @@
     @apply border-violet-200 bg-accent-2-soft;
   }
 
+  /* ---- Collapsible cards (<details>/<summary>) ---- */
+  .collapsible-summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-4 select-none;
+  }
+
+  .collapsible-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .collapsible-summary::after {
+    content: '';
+    @apply size-2.5 shrink-0 rotate-45 border-r-2 border-b-2 border-mist-500 transition-transform;
+  }
+
+  .collapsible[open] > .collapsible-summary::after {
+    @apply -rotate-135;
+  }
+
+  .collapsible-summary:focus-visible {
+    @apply rounded-md outline-2 outline-offset-4 outline-accent;
+  }
+
   /* ---- Controls ---- */
   .btn {
     @apply inline-block cursor-pointer rounded-lg bg-accent px-5 py-2.5 font-medium text-white no-underline transition-colors hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;

@@ -24,6 +24,7 @@
     --color-mist-200: oklch(92.5% 0.005 214.3);
     --color-mist-300: oklch(87.2% 0.007 219.6);
     --color-mist-400: oklch(72.3% 0.014 214.4);
+    --color-mist-500: oklch(56% 0.021 213.5);
     --color-mist-600: oklch(45% 0.017 213.2);
     --color-mist-700: oklch(37.8% 0.015 216);
     --color-mist-800: oklch(27.5% 0.011 216.9);
@@ -472,6 +473,44 @@
   .card-accent {
     border-color: var(--color-violet-200);
     background-color: var(--color-accent-2-soft);
+  }
+  .collapsible-summary {
+    display: flex;
+    cursor: pointer;
+    list-style-type: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: calc(var(--spacing) * 4);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .collapsible-summary::-webkit-details-marker {
+    display: none;
+  }
+  .collapsible-summary::after {
+    content: '';
+    width: calc(var(--spacing) * 2.5);
+    height: calc(var(--spacing) * 2.5);
+    flex-shrink: 0;
+    rotate: 45deg;
+    border-right-style: var(--tw-border-style);
+    border-right-width: 2px;
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 2px;
+    border-color: var(--color-mist-500);
+    transition-property: transform, translate, scale, rotate;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .collapsible[open] > .collapsible-summary::after {
+    rotate: calc(135deg * -1);
+  }
+  .collapsible-summary:focus-visible {
+    border-radius: var(--radius-md);
+    outline-style: var(--tw-outline-style);
+    outline-width: 2px;
+    outline-offset: 4px;
+    outline-color: var(--color-accent);
   }
   .btn {
     display: inline-block;
