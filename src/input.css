@@ -10,6 +10,9 @@
   --color-accent-soft: var(--color-teal-50);
   --color-accent-2: var(--color-violet-100);
   --color-accent-2-soft: var(--color-violet-50);
+
+  /* Handwriting font for home page headings (loaded from Google Fonts) */
+  --font-script: 'Playwrite BE WAL', cursive;
 }
 
 @layer base {

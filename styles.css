@@ -47,6 +47,7 @@
     --text-2xl--line-height: calc(2 / 1.5);
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
+    --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
@@ -62,6 +63,7 @@
     --color-accent: var(--color-teal-700);
     --color-accent-hover: var(--color-teal-600);
     --color-accent-2-soft: var(--color-violet-50);
+    --font-script: 'Playwrite BE WAL', cursive;
   }
 }
 @layer base {
@@ -315,6 +317,9 @@
   .text-center {
     text-align: center;
   }
+  .font-script {
+    font-family: var(--font-script);
+  }
   .text-base {
     font-size: var(--text-base);
     line-height: var(--tw-leading, var(--text-base--line-height));
@@ -334,6 +339,10 @@
   .font-medium {
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
+  }
+  .font-normal {
+    --tw-font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-normal);
   }
   .text-mist-600 {
     color: var(--color-mist-600);
