@@ -613,6 +613,10 @@
       outline-style: none;
     }
   }
+  .table-scroll {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+  }
   .vocab-table {
     width: 100%;
     border-collapse: collapse;

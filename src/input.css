@@ -112,6 +112,12 @@
   }
 
   /* ---- Tables ---- */
+  /* Wrapper so a long word scrolls the table sideways instead of
+     stretching the page on small screens */
+  .table-scroll {
+    @apply overflow-x-auto rounded-lg;
+  }
+
   .vocab-table {
     @apply w-full border-collapse overflow-hidden rounded-lg text-left text-sm;
   }
