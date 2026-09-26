@@ -84,7 +84,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **All visual elements styled using CSS** - Each page and element has its own styling.
 - [x] **Responsive to window resizing using flexbox and/or grid display** - Flex display is used so that on mobile the header links display underneath the page title instead of getting squished next to it or overflowing
 - [x] **Use of a imported font** - Playwrite BE WAL is used for artistic heading text in the homepage.
-- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - Includes element styling, including for body, h2, and a tags, and styles most elements based on class since that is what Tailwind is best configured for.
+- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - Includes element styling, including for body, h2, and a tags, and styles most elements based on class since that is what Tailwind is best configured for. Id styling is used for the blobs in the background that have individual keyframe animations.
 
 ## 🚀 React part 1: Routing deliverable
 

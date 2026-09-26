@@ -161,7 +161,7 @@
 
 
 
-  .blob-1 {
+  #blob-1 {
     @apply bg-violet-300;
     width: 30rem;
     height: 30rem;
@@ -170,7 +170,7 @@
     --scroll-anim: blob-1-drift;
   }
 
-  .blob-2 {
+  #blob-2 {
     @apply bg-purple-300;
     width: 26rem;
     height: 26rem;
@@ -179,7 +179,7 @@
     --scroll-anim: blob-2-drift;
   }
 
-  .blob-3 {
+  #blob-3 {
     @apply bg-fuchsia-200;
     width: 22rem;
     height: 22rem;
