@@ -78,13 +78,13 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Visually appealing colors and layout. No overflowing elements.** - I did not complete this part of the deliverable.
-- [ ] **Use of a CSS framework** - I did not complete this part of the deliverable.
-- [ ] **All visual elements styled using CSS** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing using flexbox and/or grid display** - I did not complete this part of the deliverable.
-- [ ] **Use of a imported font** - I did not complete this part of the deliverable.
-- [ ] **Use of different types of selectors including element, class, ID, and pseudo selectors** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Visually appealing colors and layout. No overflowing elements.** - I chose theme colors and made sure the elements display well on various browser sizes and phone screens
+- [x] **Use of a CSS framework** - I set up my project to use Tailwind and styled elements with Tailwind.
+- [x] **All visual elements styled using CSS** - Each page and element has its own styling.
+- [x] **Responsive to window resizing using flexbox and/or grid display** - Flex display is used so that on mobile the header links display underneath the page title instead of getting squished next to it or overflowing
+- [x] **Use of a imported font** - Playwrite BE WAL is used for artistic heading text in the homepage.
+- [x] **Use of different types of selectors including element, class, ID, and pseudo selectors** - Includes element styling, including for body, h2, and a tags, and styles most elements based on class since that is what Tailwind is best configured for.
 
 ## 🚀 React part 1: Routing deliverable
 
