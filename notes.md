@@ -77,3 +77,5 @@ not just time, but I'm glad you can because this is exactly what I was hoping fo
 - the component function returns a bunch of HTML - everything in there has to nest inside one main thing - usually just <> </> to keep it simple
 - uses lots of anonymous functions
 - define state variables at the top and use them anywhere with {variableName}
+- we will need to move all our startup html/css into JSX for use with React - should be mostly copy paste
+- not just variable names, but anything inside inline {} can be any javascript
