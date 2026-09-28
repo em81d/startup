@@ -72,3 +72,5 @@ not just time, but I'm glad you can because this is exactly what I was hoping fo
 
 - React avoids duplication of code because you can use the SAME navbar, header, footer code in each page
 - create a component once, only modify pieces at a time, use that component wherever you want
+- creating a component defines basically an HTML tag you can use in the project
+- defined as function ComponentName() {}, used as <ComponentName>
