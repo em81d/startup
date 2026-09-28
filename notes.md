@@ -74,3 +74,6 @@ not just time, but I'm glad you can because this is exactly what I was hoping fo
 - create a component once, only modify pieces at a time, use that component wherever you want
 - creating a component defines basically an HTML tag you can use in the project
 - defined as function ComponentName() {}, used as <ComponentName>
+- the component function returns a bunch of HTML - everything in there has to nest inside one main thing - usually just <> </> to keep it simple
+- uses lots of anonymous functions
+- define state variables at the top and use them anywhere with {variableName}
