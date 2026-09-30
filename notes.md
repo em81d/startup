@@ -79,3 +79,5 @@ not just time, but I'm glad you can because this is exactly what I was hoping fo
 - define state variables at the top and use them anywhere with {variableName}
 - we will need to move all our startup html/css into JSX for use with React - should be mostly copy paste
 - not just variable names, but anything inside inline {} can be any javascript
+- navigation - <a> tags need to change to NavLink tags so it loads the React instead of the old HTML pages
+- also, class is a keyword in JSX so that's why we use className in React
