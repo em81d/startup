@@ -9,29 +9,35 @@ import { Chat } from './chat/chat';
 export default function App() {
   return (
     <BrowserRouter>
-        <header class="site-header">
-        <div class="site-header-inner">
-            <NavLink class="site-title" to="home">Chat260</NavLink>
+        <header className="site-header">
+        <div className="site-header-inner">
+            <NavLink className="site-title" to="home">Chat260</NavLink>
             <nav>
-            <ul class="site-nav">
-                <li><NavLink class="nav-link nav-link-active" to="home">Home</NavLink></li>
-                <li><NavLink class="nav-link" to="login">Login</NavLink></li>
-                <li><NavLink class="nav-link" to="chat">Chat</NavLink></li>
-                <li><NavLink class="nav-link" to="progress">Progress</NavLink></li>
+            <ul className="site-nav">
+                <li><NavLink className="nav-link nav-link-active" to="home">Home</NavLink></li>
+                <li><NavLink className="nav-link" to="login">Login</NavLink></li>
+                <li><NavLink classNameName="nav-link" to="chat">Chat</NavLink></li>
+                <li><NavLink classNameName="nav-link" to="progress">Progress</NavLink></li>
             </ul>
             </nav>
         </div>
         </header>
 
-        <main>App components go here</main>
+        <Routes>
+            <Route path='/' element={<Home />} exact />
+            <Route path='/chat' element={<Chat />} />
+            <Route path='/progress' element={<Progress />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='*' element={<NotFound />} />
+        </Routes>
 
 
-        <footer class="site-footer">
-        <div class="site-footer-inner">
-            <div class="flex items-center gap-3">
-            <img src="chatlogo.png" alt="Chat260 logo" width="64" height="64" class="rounded-lg" />
+        <footer className="site-footer">
+        <div className="site-footer-inner">
+            <div className="flex items-center gap-3">
+            <img src="chatlogo.png" alt="Chat260 logo" width="64" height="64" className="rounded-lg" />
             <div>
-                <p class="font-medium text-mist-700">Thanks for using Chat260!</p>
+                <p className="font-medium text-mist-700">Thanks for using Chat260!</p>
                 <p>by Emeline MacJanet</p>
             </div>
             </div>
@@ -42,4 +48,9 @@ export default function App() {
     
     </BrowserRouter>
   );
+}
+
+
+function NotFound() {
+  return <main className="">404: Return to sender. Address unknown.</main>;
 }
