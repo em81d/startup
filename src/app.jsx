@@ -11,13 +11,13 @@ export default function App() {
     <BrowserRouter>
         <header class="site-header">
         <div class="site-header-inner">
-            <a class="site-title" href="index.html">Chat260</a>
+            <NavLink class="site-title" to="home">Chat260</NavLink>
             <nav>
             <ul class="site-nav">
-                <li><a class="nav-link nav-link-active" href="index.html">Home</a></li>
-                <li><a class="nav-link" href="login.html">Login</a></li>
-                <li><a class="nav-link" href="chat.html">Chat</a></li>
-                <li><a class="nav-link" href="progress.html">Progress</a></li>
+                <li><NavLink class="nav-link nav-link-active" to="home">Home</NavLink></li>
+                <li><NavLink class="nav-link" to="login">Login</NavLink></li>
+                <li><NavLink class="nav-link" to="chat">Chat</NavLink></li>
+                <li><NavLink class="nav-link" to="progress">Progress</NavLink></li>
             </ul>
             </nav>
         </div>
