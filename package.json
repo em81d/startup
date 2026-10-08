@@ -46,6 +46,9 @@
     "node-addon-api": "^7.1.1",
     "picocolors": "^1.1.1",
     "picomatch": "^2.3.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4",
     "source-map-js": "^1.2.1",
     "tapable": "^2.3.3",
     "to-regex-range": "^5.0.1"
