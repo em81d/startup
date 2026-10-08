@@ -29,6 +29,7 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
     "braces": "^3.0.3",
     "detect-libc": "^1.0.3",
     "enhanced-resolve": "^5.25.1",

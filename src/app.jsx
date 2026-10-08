@@ -1,5 +1,5 @@
 import React from 'react';
-import './app.css';
+import './input.css';
 
 export default function App() {
   return <div>
@@ -19,7 +19,7 @@ export default function App() {
 
     <main>App components go here</main>
 
-    
+
     <footer class="site-footer">
       <div class="site-footer-inner">
         <div class="flex items-center gap-3">
