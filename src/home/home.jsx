@@ -1,9 +1,16 @@
 import React from 'react';
-import './input.css';
+import { NavLink } from 'react-router-dom';
 
 
 export function Home() {
   return (
+    <>
+    <div className="scroll-bg" aria-hidden="true">
+      <div className="blob" id="blob-1"></div>
+      <div className="blob" id="blob-2"></div>
+      <div className="blob" id="blob-3"></div>
+    </div>
+
     <main className="page">
       <h2 className="mx-auto max-w-xl font-script font-normal mt-10 leading-relaxed">Learn a language by actually talking</h2>
 
@@ -27,8 +34,8 @@ export function Home() {
       </div>
 
       <div className="mx-auto mt-8 flex max-w-xl flex-wrap gap-3">
-        <a className="btn" href="chat.html">Start chatting</a>
-        <a className="btn-secondary" href="progress.html">See your progress</a>
+        <NavLink className="btn" to="/chat">Start chatting</NavLink>
+        <NavLink className="btn-secondary" to="/progress">See your progress</NavLink>
       </div>
 
 
@@ -97,5 +104,6 @@ export function Home() {
       </div>
 
     </main>
+    </>
   );
 }

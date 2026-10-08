@@ -16,6 +16,10 @@
 }
 
 @layer base {
+  #root {
+    @apply flex min-h-screen flex-col;
+  }
+
   body {
     @apply bg-mist-50 text-mist-800 font-sans antialiased flex min-h-screen flex-col;
   }

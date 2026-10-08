@@ -2,3 +2,4 @@
 *.pem
 simon/
 node_modules/
+dist/

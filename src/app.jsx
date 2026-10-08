@@ -11,13 +11,13 @@ export default function App() {
     <BrowserRouter>
         <header className="site-header">
         <div className="site-header-inner">
-            <NavLink className="site-title" to="home">Chat260</NavLink>
+            <NavLink className="site-title" to="/">Chat260</NavLink>
             <nav>
             <ul className="site-nav">
-                <li><NavLink className="nav-link nav-link-active" to="home">Home</NavLink></li>
-                <li><NavLink className="nav-link" to="login">Login</NavLink></li>
-                <li><NavLink classNameName="nav-link" to="chat">Chat</NavLink></li>
-                <li><NavLink classNameName="nav-link" to="progress">Progress</NavLink></li>
+                <li><NavLink className="nav-link nav-link-active" to="/">Home</NavLink></li>
+                <li><NavLink className="nav-link" to="/login">Login</NavLink></li>
+                <li><NavLink className="nav-link" to="/chat">Chat</NavLink></li>
+                <li><NavLink className="nav-link" to="/progress">Progress</NavLink></li>
             </ul>
             </nav>
         </div>
@@ -35,7 +35,7 @@ export default function App() {
         <footer className="site-footer">
         <div className="site-footer-inner">
             <div className="flex items-center gap-3">
-            <img src="chatlogo.png" alt="Chat260 logo" width="64" height="64" className="rounded-lg" />
+            <img src="/chatlogo.png" alt="Chat260 logo" width="64" height="64" className="rounded-lg" />
             <div>
                 <p className="font-medium text-mist-700">Thanks for using Chat260!</p>
                 <p>by Emeline MacJanet</p>

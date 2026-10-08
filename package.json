@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "Chat260 — learn a language by actually talking.",
   "scripts": {
-    "build:css": "tailwindcss -i ./src/input.css -o ./styles.css",
-    "watch:css": "tailwindcss -i ./src/input.css -o ./styles.css --watch",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -16,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/em81d/startup/issues"
   },

@@ -1,5 +1,4 @@
 import React from 'react';
-import './input.css';
 
 export function Login() {
   return (
@@ -9,11 +8,11 @@ export function Login() {
       <section className="card mt-6 w-full max-w-sm">
         <form className="space-y-4">
           <div>
-            <label className="field-label" for="email">Email</label>
+            <label className="field-label" htmlFor="email">Email</label>
             <input className="field-input" type="email" id="email" name="email" placeholder="your@email.com" />
           </div>
           <div>
-            <label className="field-label" for="password">Password</label>
+            <label className="field-label" htmlFor="password">Password</label>
             <input className="field-input" type="password" id="password" name="password" placeholder="password" />
           </div>
           <div className="flex justify-center gap-3 pt-2">
