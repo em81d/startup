@@ -14,7 +14,7 @@ export default function App() {
             <NavLink className="site-title" to="/">Chat260</NavLink>
             <nav>
             <ul className="site-nav">
-                <li><NavLink className="nav-link nav-link-active" to="/">Home</NavLink></li>
+                <li><NavLink className="nav-link" to="/" end>Home</NavLink></li>
                 <li><NavLink className="nav-link" to="/login">Login</NavLink></li>
                 <li><NavLink className="nav-link" to="/chat">Chat</NavLink></li>
                 <li><NavLink className="nav-link" to="/progress">Progress</NavLink></li>

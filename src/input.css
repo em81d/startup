@@ -59,7 +59,7 @@
     @apply rounded-md px-3 py-2 text-sm font-medium text-teal-50 no-underline transition-colors hover:bg-accent-hover hover:text-white hover:no-underline;
   }
 
-  .nav-link-active {
+  .nav-link.active {
     @apply bg-teal-800 text-white;
   }
 
