@@ -162,3 +162,145 @@ Modify the existing JSX:
 - Replace the body of `handleSubmit` with a `fetch('/api/auth/login', …)` (or `/create` for Sign Up), and only call `onLogin` if the server says OK.
 - Logout would also call the server to end the session, then call `onLogout`.
 - The `App`/props structure from this plan stays the same — that's why lifting state up now pays off.
+
+---
+
+# Plan 2: Add a user name (separate from email)
+
+## Context
+The localStorage login stub (Plan 1) only stores an email. We want a **name** too, so pages can greet the user personally. The Account page still says "Logged in as {email}", but the Progress page heading becomes a greeting:
+
+```
+hi, {name}.
+Here's your progress.
+```
+
+Files changed: `src/app.jsx`, `src/login/login.jsx`, `src/progress/progress.jsx`.
+
+---
+
+## Key React ideas in this change
+
+1. **Same pattern, second piece of state.** You already lifted `userEmail` up to `App`. A name is just another piece of shared state, so it goes in the same place, handled the same way. Once you've learned the pattern you can repeat it.
+2. **Passing props to a *different* child.** Before, only `Login` got user info. Now `Progress` needs it too. That's the payoff of lifting state up: any page `App` renders can be handed the data.
+3. **Functions can take more than one argument.** `onLogin(email)` becomes `onLogin(email, name)`. The parent defines what the callback expects and the child supplies those values.
+4. **Fallback values with `||`.** `userName || 'there'` means "use `userName` if it's truthy, otherwise use `'there'`". An empty string is falsy, so a logged-out visitor sees "hi, there." instead of "hi, ."
+5. **Why two localStorage keys instead of one?** You *could* store `{ email, name }` as one JSON string (`JSON.stringify` / `JSON.parse`). Two plain keys are simpler to read in DevTools and need no parsing, which is good while learning. If the user object grows (avatar, language, level…), switch to one JSON key.
+
+---
+
+## Step 1: `src/app.jsx`
+
+### 1a. Add a second state variable
+Right under the existing `userEmail` line:
+
+```jsx
+const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+```
+This works exactly like `userEmail`: it starts from localStorage so a refresh keeps it.
+
+### 1b. Update `login` and `logout`
+```jsx
+function login(email, name) {
+  localStorage.setItem('userEmail', email);
+  localStorage.setItem('userName', name);
+  setUserEmail(email);
+  setUserName(name);
+}
+
+function logout() {
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userName');
+  setUserEmail('');
+  setUserName('');
+}
+```
+- Every place that touches the email now touches the name too, so the two always stay in sync.
+- Forgetting `removeItem('userName')` in logout is an easy bug to make: the next person to log in would briefly see the old name.
+
+### 1c. Pass the name to Progress
+Change:
+```jsx
+<Route path='/progress' element={<Progress />} />
+```
+to:
+```jsx
+<Route path='/progress' element={<Progress userName={userName} />} />
+```
+The nav label logic (`userEmail ? 'Account' : 'Login'`) doesn't change. Email is still the "am I logged in?" check.
+
+---
+
+## Step 2: `src/login/login.jsx`
+
+### 2a. Add form state for the name
+At the top with the other `useState` lines:
+```jsx
+const [name, setName] = React.useState('');
+```
+
+### 2b. Send the name to `App` on submit
+In `handleSubmit`, change `onLogin(email)` to:
+```jsx
+onLogin(email, name.trim());
+```
+`.trim()` strips leading/trailing spaces, so `"  Emeline "` is saved as `"Emeline"`.
+
+### 2c. Add a Name input to the form
+Put it as the first field inside the `<form>`, above Email. Copy the same structure as the other fields:
+```jsx
+<div>
+  <label className="field-label" htmlFor="name">Name</label>
+  <input
+    className="field-input"
+    type="text"
+    id="name"
+    name="name"
+    placeholder="your name"
+    value={name}
+    onChange={(e) => setName(e.target.value)}
+    required
+  />
+</div>
+```
+- `htmlFor="name"` on the label matches `id="name"` on the input. Clicking the label focuses the input, and screen readers announce them together. (In JSX it's `htmlFor`, not `for`, because `for` is a reserved word in JavaScript.)
+- `required` makes the browser block submit if the name is empty, the same validation you already have on email and password.
+
+### 2d. Account view: no change
+It still shows `{userEmail}`, as requested.
+
+---
+
+## Step 3: `src/progress/progress.jsx`
+
+### 3a. Accept the prop
+```jsx
+export function Progress({ userName }) {
+```
+
+### 3b. Replace the heading
+Replace `<h2>Progress</h2>` with:
+```jsx
+<h2>hi, {userName || 'there'}.</h2>
+<h3>Here's your progress.</h3>
+```
+- `{userName || 'there'}` is a JS expression inside JSX. See idea #4 above.
+- The apostrophe in `Here's` is fine in JSX text. (Some linters prefer `&apos;`, but React renders it either way.)
+- Heading levels: `src/input.css` already styles `h2` (3xl bold) and `h3` (xl semibold). `h1` has **no** custom style, and Tailwind's reset makes an unstyled `h1` look like plain body text. That's why this uses `h2`/`h3`. If you want a real `<h1>`, add an `h1 { @apply ... }` rule in the `@layer base` block of `input.css`.
+
+---
+
+## Known limitation (because there's no database yet)
+The **Name** field shows for both Login and Sign Up. Logically, only Sign Up should ask for a name: on Login, the server would look up the name that goes with the email. Without a backend there's nowhere to look it up, so for now the form asks every time. When you add the database:
+- Show the Name field only for Sign Up (e.g. a `mode` state toggled by the buttons, or a separate sign-up form).
+- On Login, the server response returns the user's name, and you call `onLogin(email, response.name)`.
+
+## Verification
+1. `npm run dev`
+2. **Logged out:** visit `/progress` and you should see "hi, there."
+3. Go to `/login`, submit with an empty Name. The browser should block it ("Please fill out this field").
+4. Enter `Emeline` / `me@test.com` / `abcd` → **Login**. The nav changes to **Account**, and the page shows "Logged in as me@test.com".
+5. Visit `/progress` and you should see "hi, Emeline." / "Here's your progress."
+6. Refresh. The name should still be there.
+7. DevTools → Application → Local Storage: `userEmail` and `userName` both exist.
+8. **Log out**, then check `/progress` says "hi, there." again and both keys are gone from Local Storage.
