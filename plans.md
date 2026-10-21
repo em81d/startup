@@ -517,3 +517,118 @@ Add a Chat section inside `@layer components`, just above `/* ---- Footer ---- *
 9. **Reload.** Your messages are still there, below the intro bubble.
 10. DevTools → Application → Local Storage: there's a `chatMessages:<your email>` key holding a JSON array.
 11. Log out and log in with a **different** email. The chat is fresh (only the intro bubble). Switch back to the first email and the old history returns.
+
+---
+
+# Plan 4: Mock LLM response (hard-coded reply)
+
+## Context
+The chat (Plan 3) lets you send messages, but nothing ever answers, so it doesn't feel like a conversation. The real app will send your message to an LLM and show its reply. Before that service exists, we **mock** it: a function shaped exactly like the future LLM call, but it always returns the same canned reply, **"thanks for sharing!"**.
+
+This follows the course's "hard coded responses" pattern:
+```js
+function getWeather() {
+  // This will be replaced with a 3rd party service call
+  return { date: '2026-05-20', outlook: 'fair' };
+}
+const weather = getWeather();
+```
+The idea is that the rest of the app calls `getWeather()` and uses what comes back without knowing or caring that it's fake. Later you only rewrite the **inside** of that one function, and nothing else has to change.
+
+File changed: `src/chat/chat.jsx` (only).
+
+---
+
+## Key ideas in this change
+
+1. **Mocking / stubbing.** A stub is a placeholder that returns realistic fake data. It lets you build and test the UI flow now, and it marks *exactly one place* where the real service plugs in later.
+2. **Design the return value to match the real thing.** The mock returns a full message object, `{ id, from, text }`, the same shape as every other message in the chat. Because of that, the reply can go straight into the `messages` array and be rendered, saved and reloaded with zero special-casing.
+3. **Design the parameters to match the real thing too.** The real LLM call will need to know what you said, so the mock takes `message` as an argument even though it ignores it for now. Your editor flags it as "declared but never read". That's expected and harmless. It's a reminder that the parameter is waiting for the real implementation.
+4. **Adding two items to an array at once.** `[...messages, myMessage, reply]` copies the old array and appends both new items in one step, so there's one state update and one re-render.
+
+---
+
+## Step 1: Add the mock function
+
+In `src/chat/chat.jsx`, right below `introMessage` (outside any component):
+
+```jsx
+function getChatResponse(message) {
+  // This will be replaced with a call to the LLM service
+  return { id: crypto.randomUUID(), from: 'them', text: 'thanks for sharing!' };
+}
+```
+- **Outside the component:** it doesn't use any React state or props, so it doesn't belong inside `ChatWindow`. Keeping it at the top of the file also makes it easy to find when you replace it.
+- **`from: 'them'`** makes it render as a left-side violet bubble, the same as the intro message.
+- **New `id` every call:** each reply is a separate message, so each needs its own unique `key`. If it returned a fixed id like `'reply'`, React would warn about duplicate keys after the second reply.
+- **The comment** follows the template: it tells future-you (and graders) that this is intentionally fake.
+
+---
+
+## Step 2: Call it when the user sends a message
+
+In `ChatWindow`'s `handleSubmit`, replace:
+```jsx
+const newMessages = [...messages, { id: crypto.randomUUID(), from: 'me', text }];
+```
+with:
+```jsx
+const myMessage = { id: crypto.randomUUID(), from: 'me', text };
+const reply = getChatResponse(text);
+
+const newMessages = [...messages, myMessage, reply];
+```
+The full function now reads:
+```jsx
+function handleSubmit(e) {
+  e.preventDefault();
+  const text = draft.trim();
+  if (!text) return;
+
+  const myMessage = { id: crypto.randomUUID(), from: 'me', text };
+  const reply = getChatResponse(text);
+
+  const newMessages = [...messages, myMessage, reply];
+  setMessages(newMessages);
+  localStorage.setItem(storageKey, JSON.stringify(newMessages));
+  setDraft('');
+}
+```
+- Pulling `myMessage` into its own variable makes the line that builds `newMessages` read like a sentence: "the old messages, then mine, then the reply."
+- The order in the array matters: `myMessage` before `reply` means your bubble appears first, then the response under it.
+- **The replies get saved too.** Because `reply` is in `newMessages`, it's stored in localStorage with everything else, so after a reload the whole back-and-forth is still there.
+- Nothing else changes. `.map()` already renders any `from: 'them'` message as a left bubble, and the `useEffect` already scrolls to the bottom whenever `messages` changes. This is the payoff of matching the data shape (idea #2).
+
+---
+
+## Later, when the real LLM service exists (not part of this change)
+A real LLM call goes over the network, so it's **asynchronous**: you have to wait for the answer. The change would look like this:
+```jsx
+async function getChatResponse(message) {
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message }),
+  });
+  const data = await response.json();
+  return { id: crypto.randomUUID(), from: 'them', text: data.text };
+}
+```
+And in `handleSubmit`:
+1. Make it `async function handleSubmit(e)`.
+2. Show your own bubble **immediately**: `setMessages((prev) => [...prev, myMessage])`.
+3. Then `const reply = await getChatResponse(text);` and append it with `setMessages((prev) => [...prev, reply])`.
+4. Use the **function form** `(prev) => ...` of the setter, because by the time the reply arrives, `messages` from this render is out of date.
+5. Optional: a "typing..." bubble while waiting, and a `try/catch` that shows an error bubble if the request fails.
+
+If you want the mock to *feel* more realistic before then, you can fake the wait with `setTimeout`. That has the same async shape as the real call, so it's good practice for the steps above.
+
+## Verification
+1. `npm run dev`, log in, go to `/chat`.
+2. Send `hola`. Your teal bubble appears on the right, and directly below it a violet **"thanks for sharing!"** bubble on the left.
+3. Send a few more. Every message gets exactly one reply, in order, and the window stays scrolled to the bottom.
+4. Press Enter on an empty input. No message and **no** reply. The `if (!text) return;` runs before `getChatResponse` is ever called.
+5. Reload. The full back-and-forth is still there.
+6. DevTools → Application → Local Storage → `chatMessages:<your email>`: the array alternates `"from":"me"` and `"from":"them"` entries.
+7. DevTools Console: no "two children with the same key" warnings, which confirms each reply gets its own id.
+8. Note: messages you sent **before** this change have no replies in the saved history. That's expected, since they were saved before the mock existed.
