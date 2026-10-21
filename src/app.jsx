@@ -8,15 +8,20 @@ import { Chat } from './chat/chat';
 
 export default function App() {
   const [userEmail, setUserEmail] = React.useState(localStorage.getItem('userEmail') || '');
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
 
-  function login(email) {
+  function login(email, name) {
     localStorage.setItem('userEmail', email);
+    localStorage.setItem('userName', name);
     setUserEmail(email);
+    setUserName(name);
   }
 
   function logout() {
     localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
     setUserEmail('');
+    setUserName('');
   }
 
   return (
