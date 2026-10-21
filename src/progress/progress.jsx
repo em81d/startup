@@ -1,9 +1,10 @@
 import React from 'react';
 
-export function Progress() {
+export function Progress({ userName }) {
   return (
     <main className="page">
-      <h2>Progress</h2>
+      <h2>hi, {userName || 'there'}.</h2>
+      <h3>Here's your progress.</h3>
 
       <details className="card collapsible mt-6">
         <summary className="collapsible-summary"><h3>Words you know</h3></summary>
