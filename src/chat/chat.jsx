@@ -8,25 +8,27 @@ export function Chat({ userEmail }) {
     <main className="page">
       <h2>Chat</h2>
 
-      {userEmail ? (
-        <ChatWindow userEmail={userEmail} />
-      ) : (
-        <section className="card mt-6 max-w-2xl">
-          <h3>Log in to start chatting</h3>
-          <p className="mt-2 text-mist-600">
-            Your conversation picks up right where you left off.
-          </p>
-          <NavLink className="btn mt-5" to="/login">Go to login</NavLink>
-        </section>
-      )}
+      <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start">
+        {userEmail ? (
+          <ChatWindow userEmail={userEmail} />
+        ) : (
+          <section className="card min-w-0 flex-1">
+            <h3>Log in to start chatting</h3>
+            <p className="mt-2 text-mist-600">
+              Your conversation picks up right where you left off.
+            </p>
+            <NavLink className="btn mt-5" to="/login">Go to login</NavLink>
+          </section>
+        )}
 
-      <section className="card card-accent mt-6 max-w-2xl">
-        <h3>Focus for this conversation</h3>
-        <ul className="mt-3 list-inside list-disc space-y-1 text-mist-700">
-          <li>Using past tense</li>
-          <li>Talking about professions</li>
-        </ul>
-      </section>
+        <section className="card card-accent lg:w-72 lg:shrink-0">
+          <h3>Focus for this conversation</h3>
+          <ul className="mt-3 list-inside list-disc space-y-1 text-mist-700">
+            <li>Using past tense</li>
+            <li>Talking about professions</li>
+          </ul>
+        </section>
+      </div>
     </main>
   );
 }
@@ -56,7 +58,7 @@ function ChatWindow({ userEmail }) {
   const allMessages = [introMessage, ...messages];
 
   return (
-    <section className="card mt-6 max-w-2xl">
+    <section className="card min-w-0 flex-1">
       <div className="chat-window" ref={scrollRef}>
         {allMessages.map((message) => (
           <div key={message.id} className={message.from === 'me' ? 'bubble bubble-me' : 'bubble bubble-them'}>
