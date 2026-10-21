@@ -54,7 +54,10 @@ function ChatWindow({ userEmail }) {
     const text = draft.trim();
     if (!text) return;
 
-    const newMessages = [...messages, { id: crypto.randomUUID(), from: 'me', text }];
+    const myMessage = { id: crypto.randomUUID(), from: 'me', text };
+    const reply = getChatResponse(text);
+
+    const newMessages = [...messages, myMessage, reply];
     setMessages(newMessages);
     localStorage.setItem(storageKey, JSON.stringify(newMessages));
     setDraft('');
