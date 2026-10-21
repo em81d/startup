@@ -3,6 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 const introMessage = { id: 'intro', from: 'them', text: "Hi, let's get started." };
 
+function getChatResponse(message) {
+  // This will be replaced with a call to the LLM service
+  return { id: crypto.randomUUID(), from: 'them', text: 'thanks for sharing!' };
+}
+
 export function Chat({ userEmail }) {
   return (
     <main className="page">
