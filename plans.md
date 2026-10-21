@@ -304,3 +304,216 @@ The **Name** field shows for both Login and Sign Up. Logically, only Sign Up sho
 6. Refresh. The name should still be there.
 7. DevTools → Application → Local Storage: `userEmail` and `userName` both exist.
 8. **Log out**, then check `/progress` says "hi, there." again and both keys are gone from Local Storage.
+
+---
+
+# Plan 3: Text chat interface (localStorage, no backend)
+
+## Context
+The Chat page (`src/chat/chat.jsx`) was static: a "Click to start conversation" button that did nothing, and a "Focus for this conversation" card. We want a working demo of the chat UI before there's a backend:
+- A chat window with message bubbles. Your messages are on the right; the other side's are on the left.
+- Type a message and press **Enter** (or click **Send**) to add a bubble.
+- Nothing replies yet. There's one hardcoded bubble from the other side: **"Hi, let's get started."**
+- Messages are saved in `localStorage`, so they survive a reload.
+- The chat only shows when logged in. Logged-out visitors see a "Log in to start chatting" card instead.
+
+Files changed: `src/app.jsx`, `src/chat/chat.jsx`, `src/input.css`.
+
+---
+
+## Key React ideas in this change
+
+1. **Rendering a list with `.map()`.** React turns an array of data into an array of elements: `messages.map((m) => <div>{m.text}</div>)`. This is the most common pattern in React.
+2. **The `key` prop.** Every item in a mapped list needs a unique, stable `key` so React can tell which items changed. Use an ID, not the array index. Indexes shift when items are inserted or removed.
+3. **Updating arrays immutably.** Never `messages.push(...)`. React only re-renders when state is set to a *new* value, and `push` changes the old array in place. Instead, copy it with the **spread operator**: `[...messages, newMessage]`.
+4. **Storing arrays/objects in localStorage.** localStorage only holds strings, so you convert going in and coming out: `JSON.stringify(array)` to save, `JSON.parse(string)` to load.
+5. **Lazy initial state.** `useState(() => expensiveThing())` with a *function* runs that function only on the first render. Without the arrow, `JSON.parse(localStorage...)` would run on every keystroke, wasted work.
+6. **Rules of Hooks.** Hooks (`useState`, `useEffect`, `useRef`) must be called in the same order every render, so you can't put them after an `if (...) return`. The fix is to split the page into two components: `Chat` decides logged-in vs. logged-out, and `ChatWindow` owns the hooks. React only creates `ChatWindow` when you're logged in, so its hooks always run in order.
+7. **`useRef`.** Gives you a handle to an actual DOM element (`ref={scrollRef}` → `scrollRef.current` is the `<div>`). It's for things React doesn't manage, like scroll position.
+8. **`useEffect`.** Runs code *after* React updates the screen. With `[messages]` as the dependency array, it runs whenever `messages` changes. We use it to scroll the chat to the bottom once the new bubble exists.
+9. **Enter-to-send comes free from `<form>`.** Pressing Enter in a text input inside a form submits the form. One `onSubmit` handler covers both the Enter key and the Send button.
+
+---
+
+## Step 1: `src/app.jsx`
+
+Give Chat the logged-in user. Change:
+```jsx
+<Route path='/chat' element={<Chat />} />
+```
+to:
+```jsx
+<Route path='/chat' element={<Chat userEmail={userEmail} />} />
+```
+Chat uses `userEmail` for two things: deciding whether to show the chat, and naming the localStorage key so each user has their own history.
+
+---
+
+## Step 2: `src/chat/chat.jsx`
+
+### 2a. Imports and the intro message
+At the top of the file:
+```jsx
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+
+const introMessage = { id: 'intro', from: 'them', text: "Hi, let's get started." };
+```
+- Each message is an object: `id` (for the `key` prop), `from` (`'me'` or `'them'`, which decides left/right), and `text`.
+- `introMessage` lives **outside** the component because it never changes. Constants don't need state.
+- It is **not** saved to localStorage. It's always shown first, so storing it would only duplicate it.
+- The text uses double quotes because it contains an apostrophe (`let's`).
+
+### 2b. `Chat`: the page shell
+```jsx
+export function Chat({ userEmail }) {
+  return (
+    <main className="page">
+      <h2>Chat</h2>
+
+      {userEmail ? (
+        <ChatWindow userEmail={userEmail} />
+      ) : (
+        <section className="card mt-6 max-w-2xl">
+          <h3>Log in to start chatting</h3>
+          <p className="mt-2 text-mist-600">
+            Your conversation picks up right where you left off.
+          </p>
+          <NavLink className="btn mt-5" to="/login">Go to login</NavLink>
+        </section>
+      )}
+
+      {/* "Focus for this conversation" card stays unchanged here */}
+    </main>
+  );
+}
+```
+- The ternary `{condition ? (A) : (B)}` picks which JSX to show. Parentheses let each branch span several lines.
+- The logged-out card replaces the old "Ready when you are" card and its do-nothing button. `NavLink` with the `btn` class looks like a button but navigates to `/login`.
+- `Chat` has **no hooks**, which is what lets it branch safely (idea #6).
+
+### 2c. `ChatWindow`: state and refs
+Below `Chat`, in the same file (not exported, since only `Chat` uses it):
+```jsx
+function ChatWindow({ userEmail }) {
+  const storageKey = `chatMessages:${userEmail}`;
+  const [messages, setMessages] = React.useState(() => JSON.parse(localStorage.getItem(storageKey) || '[]'));
+  const [draft, setDraft] = React.useState('');
+  const scrollRef = React.useRef(null);
+```
+- **Template literal**: the backticks plus `${...}` build a string like `chatMessages:me@test.com`, so each user gets their own history. Log out, log in as someone else, and you get a fresh chat.
+- `localStorage.getItem(...) || '[]'`: on the first visit there's nothing saved (`null`), so fall back to the string `'[]'`, which parses to an empty array.
+- `draft` is what's currently typed in the box: a controlled input, the same pattern as the login form.
+
+### 2d. Auto-scroll with `useEffect`
+```jsx
+  // Keep the newest message in view
+  React.useEffect(() => {
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [messages]);
+```
+`scrollHeight` is the full height of the content, so setting `scrollTop` to it scrolls to the very bottom. This also runs on first load, so a long saved history opens at the latest message.
+
+### 2e. Sending a message
+```jsx
+  function handleSubmit(e) {
+    e.preventDefault();
+    const text = draft.trim();
+    if (!text) return;
+
+    const newMessages = [...messages, { id: crypto.randomUUID(), from: 'me', text }];
+    setMessages(newMessages);
+    localStorage.setItem(storageKey, JSON.stringify(newMessages));
+    setDraft('');
+  }
+```
+- `if (!text) return;` ignores empty or spaces-only messages.
+- `crypto.randomUUID()` is built into the browser and makes a unique ID string for the `key`.
+- `{ ..., text }` is **shorthand** for `text: text`.
+- Note: we save `newMessages`, **not** `messages`. `setMessages` doesn't change the `messages` variable until the next render, so `messages` here is still the *old* array. This is one of the most common React surprises.
+- `setDraft('')` clears the input after sending.
+
+### 2f. Rendering the bubbles and input
+```jsx
+  const allMessages = [introMessage, ...messages];
+
+  return (
+    <section className="card mt-6 max-w-2xl">
+      <div className="chat-window" ref={scrollRef}>
+        {allMessages.map((message) => (
+          <div key={message.id} className={message.from === 'me' ? 'bubble bubble-me' : 'bubble bubble-them'}>
+            {message.text}
+          </div>
+        ))}
+      </div>
+
+      <form className="mt-4 flex gap-3" onSubmit={handleSubmit}>
+        <input
+          className="field-input"
+          type="text"
+          aria-label="Message"
+          placeholder="Type a message..."
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+        />
+        <button className="btn" type="submit">Send</button>
+      </form>
+    </section>
+  );
+}
+```
+- `[introMessage, ...messages]` puts the hardcoded bubble first, then everything you've sent.
+- `className={... ? 'bubble bubble-me' : 'bubble bubble-them'}` gives every bubble the shared `bubble` look, plus a side-specific class.
+- `{message.text}` is rendered as **text**, never as HTML, so typing `<b>hi</b>` shows those literal characters. React escapes it for you, which prevents a whole class of security bugs (XSS).
+- There's no visible label, so `aria-label="Message"` tells screen readers what the input is for.
+
+---
+
+## Step 3: `src/input.css`: bubble styles
+
+Add a Chat section inside `@layer components`, just above `/* ---- Footer ---- */`:
+```css
+/* ---- Chat ---- */
+.chat-window {
+  @apply flex h-96 flex-col gap-2 overflow-y-auto rounded-lg bg-mist-50 p-4;
+}
+
+.bubble {
+  @apply max-w-[75%] rounded-2xl px-4 py-2 wrap-break-word;
+}
+
+.bubble-me {
+  @apply self-end rounded-br-sm bg-accent text-white;
+}
+
+.bubble-them {
+  @apply self-start rounded-bl-sm bg-accent-2 text-mist-900;
+}
+```
+- `.chat-window`: a fixed height (`h-96`) with `overflow-y-auto` makes the window scroll internally instead of growing the page. `flex flex-col gap-2` stacks the bubbles with even spacing.
+- `self-end` / `self-start`: in a flex column, these push one item to the right or left edge. That's what puts your bubbles on the right and theirs on the left.
+- `max-w-[75%]`: square brackets are Tailwind's syntax for a custom value. Bubbles never span the full width.
+- `wrap-break-word`: a very long word (like a URL) wraps instead of overflowing the bubble.
+- `rounded-br-sm` / `rounded-bl-sm`: one less-rounded corner gives each bubble a little "tail" pointing at its sender.
+- The colors reuse the site's theme tokens (`accent` = teal, `accent-2` = violet) so the chat matches the rest of the site.
+
+---
+
+## Later, when you add the backend (not part of this change)
+- Replace the localStorage load with a `fetch` inside a `useEffect` that runs once on mount (`[]` dependency array), then `setMessages` with the result.
+- In `handleSubmit`, `POST` the message to the server instead of saving to localStorage.
+- Replies from the other side would arrive over a WebSocket and be appended with `setMessages((prev) => [...prev, reply])`. Use the **function form** of the setter there, because the reply comes in asynchronously and `messages` may be stale by then.
+- The intro message would come from the server instead of being hardcoded.
+
+## Verification
+1. `npm run dev`
+2. **Logged out:** `/chat` shows "Log in to start chatting" and a **Go to login** button that works. No chat window.
+3. Log in, then go to `/chat`. You see the left-side bubble "Hi, let's get started."
+4. Type `hola` and press **Enter**. A teal bubble appears on the right and the input clears.
+5. Type and click **Send**. That works too.
+6. Press Enter on an empty input or just spaces. Nothing is added.
+7. Send ~15 messages. The window scrolls internally and stays pinned to the newest.
+8. Paste a very long word. It wraps inside the bubble.
+9. **Reload.** Your messages are still there, below the intro bubble.
+10. DevTools → Application → Local Storage: there's a `chatMessages:<your email>` key holding a JSON array.
+11. Log out and log in with a **different** email. The chat is fresh (only the intro bubble). Switch back to the first email and the old history returns.
