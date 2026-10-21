@@ -31,6 +31,19 @@ export function Login({ userEmail, onLogin, onLogout }) {
       <section className="card mt-6 w-full max-w-sm">
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
+            <label className="field-label" htmlFor="name">Name</label>
+            <input
+              className="field-input"
+              type="text"
+              id="name"
+              name="name"
+              placeholder="your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div>
             <label className="field-label" htmlFor="email">Email</label>
             <input
               className="field-input"
