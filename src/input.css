@@ -147,6 +147,23 @@
     @apply bg-violet-50;
   }
 
+  /* ---- Chat ---- */
+  .chat-window {
+    @apply flex h-96 flex-col gap-2 overflow-y-auto rounded-lg bg-mist-50 p-4;
+  }
+
+  .bubble {
+    @apply max-w-[75%] rounded-2xl px-4 py-2 wrap-break-word;
+  }
+
+  .bubble-me {
+    @apply self-end rounded-br-sm bg-accent text-white;
+  }
+
+  .bubble-them {
+    @apply self-start rounded-bl-sm bg-accent-2 text-mist-900;
+  }
+
   /* ---- Footer ---- */
   .site-footer {
     @apply mt-auto border-t border-mist-200 bg-mist-100 text-mist-600;

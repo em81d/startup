@@ -42,7 +42,7 @@ export default function App() {
 
         <Routes>
             <Route path='/' element={<Home />} exact />
-            <Route path='/chat' element={<Chat />} />
+            <Route path='/chat' element={<Chat userEmail={userEmail} />} />
             <Route path='/progress' element={<Progress userName={userName} />} />
             <Route path='/login' element={<Login userEmail={userEmail} onLogin={login} onLogout={logout} />} />
             <Route path='*' element={<NotFound />} />
