@@ -1,12 +1,13 @@
 import React from 'react';
 
 export function Login({ userEmail, onLogin, onLogout }) {
+  const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
-    onLogin(email);
+    onLogin(email, name.trim());
     setPassword('');
   }
 
