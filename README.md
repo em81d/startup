@@ -99,9 +99,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **All functionality implemented or mocked out** - The chat window, login functionality, and messaging system are mocked out. 
+- [x] **Hooks** - I used hooks to implement several aspects of the reactivity, including the logic for the message window to make sure that the most recent message is always visible.
 
 ## 🚀 Service deliverable
 
