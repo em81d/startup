@@ -7,6 +7,18 @@ import { Progress } from './progress/progress';
 import { Chat } from './chat/chat';
 
 export default function App() {
+  const [userEmail, setUserEmail] = React.useState(localStorage.getItem('userEmail') || '');
+
+  function login(email) {
+    localStorage.setItem('userEmail', email);
+    setUserEmail(email);
+  }
+
+  function logout() {
+    localStorage.removeItem('userEmail');
+    setUserEmail('');
+  }
+
   return (
     <BrowserRouter>
         <header className="site-header">
@@ -15,7 +27,7 @@ export default function App() {
             <nav>
             <ul className="site-nav">
                 <li><NavLink className="nav-link" to="/" end>Home</NavLink></li>
-                <li><NavLink className="nav-link" to="/login">Login</NavLink></li>
+                <li><NavLink className="nav-link" to="/login">{userEmail ? 'Account' : 'Login'}</NavLink></li>
                 <li><NavLink className="nav-link" to="/chat">Chat</NavLink></li>
                 <li><NavLink className="nav-link" to="/progress">Progress</NavLink></li>
             </ul>
@@ -27,7 +39,7 @@ export default function App() {
             <Route path='/' element={<Home />} exact />
             <Route path='/chat' element={<Chat />} />
             <Route path='/progress' element={<Progress />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/login' element={<Login userEmail={userEmail} onLogin={login} onLogout={logout} />} />
             <Route path='*' element={<NotFound />} />
         </Routes>
 
