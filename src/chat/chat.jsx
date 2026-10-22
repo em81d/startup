@@ -49,6 +49,11 @@ function ChatWindow({ userEmail }) {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages]);
 
+  // Save the conversation whenever it changes
+  React.useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(messages));
+  }, [messages, storageKey]);
+
   function handleSubmit(e) {
     e.preventDefault();
     const text = draft.trim();
@@ -57,9 +62,7 @@ function ChatWindow({ userEmail }) {
     const myMessage = { id: crypto.randomUUID(), from: 'me', text };
     const reply = getChatResponse(text);
 
-    const newMessages = [...messages, myMessage, reply];
-    setMessages(newMessages);
-    localStorage.setItem(storageKey, JSON.stringify(newMessages));
+    setMessages((prev) => [...prev, myMessage, reply]);
     setDraft('');
   }
 
