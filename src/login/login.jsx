@@ -7,6 +7,21 @@ export function Login({ userEmail, onLogin, onLogout }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (e.nativeEvent.submitter?.value === 'signup') {
+      createUser();
+    } else {
+      loginUser();
+    }
+  }
+
+  async function loginUser() {
+    // This will be replaced with a call to the login endpoint
+    onLogin(email, name.trim());
+    setPassword('');
+  }
+
+  async function createUser() {
+    // This will be replaced with a call to the create-account endpoint
     onLogin(email, name.trim());
     setPassword('');
   }
@@ -71,8 +86,8 @@ export function Login({ userEmail, onLogin, onLogout }) {
             />
           </div>
           <div className="flex justify-center gap-3 pt-2">
-            <button className="btn" type="submit">Login</button>
-            <button className="btn-secondary" type="submit">Sign Up</button>
+            <button className="btn" type="submit" value="login">Login</button>
+            <button className="btn-secondary" type="submit" value="signup">Sign Up</button>
           </div>
         </form>
       </section>
