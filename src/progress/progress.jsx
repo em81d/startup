@@ -1,300 +1,109 @@
 import React from 'react';
 
+const knownWords = [
+  { spanish: 'hola', english: 'hello' },
+  { spanish: 'adiós', english: 'goodbye' },
+  { spanish: 'gracias', english: 'thank you' },
+  { spanish: 'por favor', english: 'please' },
+  { spanish: 'sí', english: 'yes' },
+  { spanish: 'no', english: 'no' },
+  { spanish: 'el agua', english: 'water' },
+  { spanish: 'la comida', english: 'food' },
+  { spanish: 'la casa', english: 'house' },
+  { spanish: 'el perro', english: 'dog' },
+  { spanish: 'el gato', english: 'cat' },
+  { spanish: 'el libro', english: 'book' },
+  { spanish: 'grande', english: 'big' },
+  { spanish: 'pequeño', english: 'small' },
+  { spanish: 'bueno', english: 'good' },
+  { spanish: 'malo', english: 'bad' },
+  { spanish: 'hablar', english: 'to speak' },
+  { spanish: 'comer', english: 'to eat' },
+  { spanish: 'beber', english: 'to drink' },
+  { spanish: 'vivir', english: 'to live' },
+];
+
+const learningWords = [
+  { spanish: 'el maestro', english: 'teacher' },
+  { spanish: 'el médico', english: 'doctor' },
+  { spanish: 'el abogado', english: 'lawyer' },
+  { spanish: 'la enfermera', english: 'nurse' },
+  { spanish: 'el cocinero', english: 'cook' },
+  { spanish: 'el bombero', english: 'firefighter' },
+  { spanish: 'el trabajo', english: 'job' },
+  { spanish: 'la empresa', english: 'company' },
+  { spanish: 'la reunión', english: 'meeting' },
+  { spanish: 'el sueldo', english: 'salary' },
+  { spanish: 'ayer', english: 'yesterday' },
+  { spanish: 'anoche', english: 'last night' },
+  { spanish: 'la semana pasada', english: 'last week' },
+  { spanish: 'fui', english: 'I went' },
+  { spanish: 'hice', english: 'I did' },
+  { spanish: 'tuve', english: 'I had' },
+  { spanish: 'trabajé', english: 'I worked' },
+  { spanish: 'estudié', english: 'I studied' },
+  { spanish: 'aprender', english: 'to learn' },
+  { spanish: 'enseñar', english: 'to teach' },
+];
+
+const futureWords = [
+  { spanish: 'el ingeniero', english: 'engineer' },
+  { spanish: 'el contador', english: 'accountant' },
+  { spanish: 'el arquitecto', english: 'architect' },
+  { spanish: 'el periodista', english: 'journalist' },
+  { spanish: 'el carpintero', english: 'carpenter' },
+  { spanish: 'el agricultor', english: 'farmer' },
+  { spanish: 'la entrevista', english: 'interview' },
+  { spanish: 'el horario', english: 'schedule' },
+  { spanish: 'el ascenso', english: 'promotion' },
+  { spanish: 'la jubilación', english: 'retirement' },
+  { spanish: 'el desarrollo', english: 'development' },
+  { spanish: 'la investigación', english: 'research' },
+  { spanish: 'el presupuesto', english: 'budget' },
+  { spanish: 'la herramienta', english: 'tool' },
+  { spanish: 'el taller', english: 'workshop' },
+  { spanish: 'emprender', english: 'to undertake' },
+  { spanish: 'lograr', english: 'to achieve' },
+  { spanish: 'resolver', english: 'to solve' },
+  { spanish: 'dirigir', english: 'to manage' },
+  { spanish: 'contratar', english: 'to hire' },
+];
+
 export function Progress({ userName }) {
   return (
     <main className="page">
       <h2>hi, {userName || 'there'}.</h2>
       <h3>Here's your progress.</h3>
 
-      <details className="card collapsible mt-6">
-        <summary className="collapsible-summary"><h3>Words you know</h3></summary>
-        <div className="table-scroll mt-4">
-          <table className="vocab-table">
-            <thead>
-              <tr>
-                <th>Spanish</th>
-                <th>English</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>hola</td>
-                <td>hello</td>
-              </tr>
-              <tr>
-                <td>adiós</td>
-                <td>goodbye</td>
-              </tr>
-              <tr>
-                <td>gracias</td>
-                <td>thank you</td>
-              </tr>
-              <tr>
-                <td>por favor</td>
-                <td>please</td>
-              </tr>
-              <tr>
-                <td>sí</td>
-                <td>yes</td>
-              </tr>
-              <tr>
-                <td>no</td>
-                <td>no</td>
-              </tr>
-              <tr>
-                <td>el agua</td>
-                <td>water</td>
-              </tr>
-              <tr>
-                <td>la comida</td>
-                <td>food</td>
-              </tr>
-              <tr>
-                <td>la casa</td>
-                <td>house</td>
-              </tr>
-              <tr>
-                <td>el perro</td>
-                <td>dog</td>
-              </tr>
-              <tr>
-                <td>el gato</td>
-                <td>cat</td>
-              </tr>
-              <tr>
-                <td>el libro</td>
-                <td>book</td>
-              </tr>
-              <tr>
-                <td>grande</td>
-                <td>big</td>
-              </tr>
-              <tr>
-                <td>pequeño</td>
-                <td>small</td>
-              </tr>
-              <tr>
-                <td>bueno</td>
-                <td>good</td>
-              </tr>
-              <tr>
-                <td>malo</td>
-                <td>bad</td>
-              </tr>
-              <tr>
-                <td>hablar</td>
-                <td>to speak</td>
-              </tr>
-              <tr>
-                <td>comer</td>
-                <td>to eat</td>
-              </tr>
-              <tr>
-                <td>beber</td>
-                <td>to drink</td>
-              </tr>
-              <tr>
-                <td>vivir</td>
-                <td>to live</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
-
-      <details className="card collapsible mt-6" open>
-        <summary className="collapsible-summary"><h3>Words you are learning</h3></summary>
-        <div className="table-scroll mt-4">
-          <table className="vocab-table">
-            <thead>
-              <tr>
-                <th>Spanish</th>
-                <th>English</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>el maestro</td>
-                <td>teacher</td>
-              </tr>
-              <tr>
-                <td>el médico</td>
-                <td>doctor</td>
-              </tr>
-              <tr>
-                <td>el abogado</td>
-                <td>lawyer</td>
-              </tr>
-              <tr>
-                <td>la enfermera</td>
-                <td>nurse</td>
-              </tr>
-              <tr>
-                <td>el cocinero</td>
-                <td>cook</td>
-              </tr>
-              <tr>
-                <td>el bombero</td>
-                <td>firefighter</td>
-              </tr>
-              <tr>
-                <td>el trabajo</td>
-                <td>job</td>
-              </tr>
-              <tr>
-                <td>la empresa</td>
-                <td>company</td>
-              </tr>
-              <tr>
-                <td>la reunión</td>
-                <td>meeting</td>
-              </tr>
-              <tr>
-                <td>el sueldo</td>
-                <td>salary</td>
-              </tr>
-              <tr>
-                <td>ayer</td>
-                <td>yesterday</td>
-              </tr>
-              <tr>
-                <td>anoche</td>
-                <td>last night</td>
-              </tr>
-              <tr>
-                <td>la semana pasada</td>
-                <td>last week</td>
-              </tr>
-              <tr>
-                <td>fui</td>
-                <td>I went</td>
-              </tr>
-              <tr>
-                <td>hice</td>
-                <td>I did</td>
-              </tr>
-              <tr>
-                <td>tuve</td>
-                <td>I had</td>
-              </tr>
-              <tr>
-                <td>trabajé</td>
-                <td>I worked</td>
-              </tr>
-              <tr>
-                <td>estudié</td>
-                <td>I studied</td>
-              </tr>
-              <tr>
-                <td>aprender</td>
-                <td>to learn</td>
-              </tr>
-              <tr>
-                <td>enseñar</td>
-                <td>to teach</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
-
-      <details className="card collapsible mt-6">
-        <summary className="collapsible-summary"><h3>Future vocab</h3></summary>
-        <div className="table-scroll mt-4">
-          <table className="vocab-table">
-            <thead>
-              <tr>
-                <th>Spanish</th>
-                <th>English</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>el ingeniero</td>
-                <td>engineer</td>
-              </tr>
-              <tr>
-                <td>el contador</td>
-                <td>accountant</td>
-              </tr>
-              <tr>
-                <td>el arquitecto</td>
-                <td>architect</td>
-              </tr>
-              <tr>
-                <td>el periodista</td>
-                <td>journalist</td>
-              </tr>
-              <tr>
-                <td>el carpintero</td>
-                <td>carpenter</td>
-              </tr>
-              <tr>
-                <td>el agricultor</td>
-                <td>farmer</td>
-              </tr>
-              <tr>
-                <td>la entrevista</td>
-                <td>interview</td>
-              </tr>
-              <tr>
-                <td>el horario</td>
-                <td>schedule</td>
-              </tr>
-              <tr>
-                <td>el ascenso</td>
-                <td>promotion</td>
-              </tr>
-              <tr>
-                <td>la jubilación</td>
-                <td>retirement</td>
-              </tr>
-              <tr>
-                <td>el desarrollo</td>
-                <td>development</td>
-              </tr>
-              <tr>
-                <td>la investigación</td>
-                <td>research</td>
-              </tr>
-              <tr>
-                <td>el presupuesto</td>
-                <td>budget</td>
-              </tr>
-              <tr>
-                <td>la herramienta</td>
-                <td>tool</td>
-              </tr>
-              <tr>
-                <td>el taller</td>
-                <td>workshop</td>
-              </tr>
-              <tr>
-                <td>emprender</td>
-                <td>to undertake</td>
-              </tr>
-              <tr>
-                <td>lograr</td>
-                <td>to achieve</td>
-              </tr>
-              <tr>
-                <td>resolver</td>
-                <td>to solve</td>
-              </tr>
-              <tr>
-                <td>dirigir</td>
-                <td>to manage</td>
-              </tr>
-              <tr>
-                <td>contratar</td>
-                <td>to hire</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
-
+      <VocabTable title="Words you know" words={knownWords} />
+      <VocabTable title="Words you are learning" words={learningWords} open />
+      <VocabTable title="Future vocab" words={futureWords} />
     </main>
+  );
+}
 
+function VocabTable({ title, words, open }) {
+  return (
+    <details className="card collapsible mt-6" open={open}>
+      <summary className="collapsible-summary"><h3>{title}</h3></summary>
+      <div className="table-scroll mt-4">
+        <table className="vocab-table">
+          <thead>
+            <tr>
+              <th>Spanish</th>
+              <th>English</th>
+            </tr>
+          </thead>
+          <tbody>
+            {words.map((word) => (
+              <tr key={word.spanish}>
+                <td>{word.spanish}</td>
+                <td>{word.english}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
   );
 }
