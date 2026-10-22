@@ -5,6 +5,7 @@ import { Login } from './login/login';
 import { Home } from './home/home';
 import { Progress } from './progress/progress';
 import { Chat } from './chat/chat';
+import { NotFound } from './notfound/notfound';
 
 export default function App() {
   const [userEmail, setUserEmail] = React.useState(localStorage.getItem('userEmail') || '');
@@ -65,9 +66,4 @@ export default function App() {
     
     </BrowserRouter>
   );
-}
-
-
-function NotFound() {
-  return <main className="">404: Return to sender. Address unknown.</main>;
 }
