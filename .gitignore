@@ -3,3 +3,4 @@
 simon/
 node_modules/
 dist/
+.vscode/
