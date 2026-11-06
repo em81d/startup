@@ -3,11 +3,6 @@ import { NavLink } from 'react-router-dom';
 
 const introMessage = { id: 'intro', from: 'them', text: "Hi, let's get started." };
 
-function getChatResponse(message) {
-  // This will be replaced with a call to the LLM service
-  return { id: crypto.randomUUID(), from: 'them', text: 'thanks for sharing!' };
-}
-
 export function Chat({ userEmail }) {
   return (
     <main className="page">
@@ -15,7 +10,7 @@ export function Chat({ userEmail }) {
 
       <div className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-start">
         {userEmail ? (
-          <ChatWindow userEmail={userEmail} />
+          <ChatWindow />
         ) : (
           <section className="card min-w-0 flex-1">
             <h3>Log in to start chatting</h3>
@@ -38,10 +33,10 @@ export function Chat({ userEmail }) {
   );
 }
 
-function ChatWindow({ userEmail }) {
-  const storageKey = `chatMessages:${userEmail}`;
+function ChatWindow() {
   const [messages, setMessages] = React.useState([]);
   const [loadError, setLoadError] = React.useState('');
+  const [sendError, setSendError] = React.useState('');
   const [draft, setDraft] = React.useState('');
   const scrollRef = React.useRef(null);
 
@@ -61,21 +56,27 @@ function ChatWindow({ userEmail }) {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [messages]);
 
-  // Save the conversation whenever it changes
-  React.useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(messages));
-  }, [messages, storageKey]);
-
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     const text = draft.trim();
     if (!text) return;
 
-    const myMessage = { id: crypto.randomUUID(), from: 'me', text };
-    const reply = getChatResponse(text);
+    setSendError('');
+    try {
+      // The service saves the message and returns [myMessage, reply]
+      const res = await fetch('/api/chat', {
+        method: 'post',
+        body: JSON.stringify({ text: text }),
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
 
-    setMessages((prev) => [...prev, myMessage, reply]);
-    setDraft('');
+      const newMessages = await res.json();
+      setMessages((prev) => [...prev, ...newMessages]);
+      setDraft('');
+    } catch (err) {
+      setSendError(`Couldn't send your message: ${err.message}`);
+    }
   }
 
   const allMessages = [introMessage, ...messages];
@@ -102,6 +103,7 @@ function ChatWindow({ userEmail }) {
         />
         <button className="btn" type="submit">Send</button>
       </form>
+      {sendError && <p className="mt-2 text-sm text-red-600">{sendError}</p>}
     </section>
   );
 }
