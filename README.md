@@ -107,14 +107,14 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
-- [ ] **Uses BCrypt to hash passwords** - I did not complete this part of the deliverable.
+- [x] I completed the prerequisites for this deliverable (Simon deployed, GitHub link, Git commits)
+- [x] **Node.js/Express HTTP service** - Node and Express are used to serve the backend.
+- [x] **Static middleware for frontend** - Express's static middleware is used as described in the course materials.
+- [x] **Calls to third party endpoints** - An API key is used to start a chat with an LLM.
+- [x] **Backend service endpoints** - The backend has support for auth functionality and sending user data (progress, chats) to the frontend.
+- [x] **Frontend calls service endpoints** - Frontent calls auth services as well as loading user's progress and chat history.
+- [x] **Supports registration, login, logout, and restricted endpoint** - the endpoints that load a user's progress and chat history are restricted to logged in users.
+- [x] **Uses BCrypt to hash passwords** - BCrypt is used to hash passwords.
 
 ## 🚀 DB deliverable
 
