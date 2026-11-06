@@ -4,6 +4,7 @@ export function Login({ userEmail, onLogin, onLogout }) {
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [displayError, setDisplayError] = React.useState('');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -15,14 +16,28 @@ export function Login({ userEmail, onLogin, onLogout }) {
   }
 
   async function loginUser() {
-    // This will be replaced with a call to the login endpoint
-    onLogin(email, name.trim());
-    setPassword('');
+    await loginOrCreate('/api/auth/login');
   }
 
   async function createUser() {
-    // This will be replaced with a call to the create-account endpoint
-    onLogin(email, name.trim());
+    await loginOrCreate('/api/auth/create');
+  }
+
+  async function loginOrCreate(endpoint) {
+    setDisplayError('');
+    const response = await fetch(endpoint, {
+      method: 'post',
+      body: JSON.stringify({ email: email, password: password }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    if (response.ok) {
+      onLogin(email, name.trim());
+    } else {
+      const body = await response.json();
+      setDisplayError(`⚠ Error: ${body.msg}`);
+    }
     setPassword('');
   }
 
@@ -42,6 +57,8 @@ export function Login({ userEmail, onLogin, onLogout }) {
   return (
     <main className="page flex flex-col items-center justify-center">
       <h2 className="text-center">Login</h2>
+
+      {displayError && <p className="text-red-600 text-sm">{displayError}</p>}
 
       <section className="card mt-6 w-full max-w-sm">
         <form className="space-y-4" onSubmit={handleSubmit}>

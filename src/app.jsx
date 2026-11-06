@@ -19,6 +19,7 @@ export default function App() {
   }
 
   function logout() {
+    fetch('/api/auth/logout', { method: 'delete'});
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userName');
     setUserEmail('');
