@@ -2,7 +2,13 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
+const { getProgress } = require('./stubProgress');
 const app = express();
+
+const authCookieName = 'token';
+
+// In-memory user list until the database exists (resets when the server restarts)
+let users = [];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
@@ -69,11 +75,17 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 const verifyAuth = async (req, res, next) => {
   const user = await findUser('token', req.cookies[authCookieName]);
   if (user) {
+    req.user = user; // let the endpoint know who is calling
     next();
   } else {
     res.status(401).send({ msg: 'Unauthorized' });
   }
 };
+
+// GetProgress returns the logged-in user's vocab progress
+apiRouter.get('/progress', verifyAuth, async (req, res) => {
+  res.send(getProgress(req.user.email));
+});
 
 
 async function createUser(email, password) {
