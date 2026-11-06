@@ -69,7 +69,18 @@ const futureWords = [
   { spanish: 'contratar', english: 'to hire' },
 ];
 
-export function Progress({ userName }) {
+export function Progress({ userEmail, userName }) {
+  if (!userEmail) {
+    return (
+      <main className="page">
+        <h2>Progress</h2>
+        <section className="card mt-6">
+          <h3>Log in to see your progress</h3>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="page">
       <h2>hi, {userName || 'there'}.</h2>
