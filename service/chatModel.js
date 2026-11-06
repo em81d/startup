@@ -15,7 +15,7 @@ for (const envPath of [path.join(__dirname, '.env'), path.join(__dirname, '..', 
   }
 }
 
-const MODEL = 'gpt-5.5';
+const MODEL = 'gpt-5.6-luna';
 
 // How many earlier messages to send with each request, so the model has context
 // without the cost growing forever as the chat gets longer.
