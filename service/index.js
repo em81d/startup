@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
 const { getProgress } = require('./stubProgress');
+const { getChatResponse } = require('./chatModel');
 const app = express();
 
 const authCookieName = 'token';
@@ -104,20 +105,26 @@ apiRouter.post('/chat', verifyAuth, async (req, res) => {
     return;
   }
 
-  const myMessage = { id: uuid.v4(), from: 'me', text: text };
-  const reply = getChatResponse(text);
-
   const email = req.user.email;
-  chats[email] = chats[email] || [];
-  chats[email].push(myMessage, reply);
+  const history = chats[email] || [];
+
+  let replyText;
+  try {
+    replyText = await getChatResponse(history, text);
+  } catch (err) {
+    console.error('Chat model error:', err.message);
+    res.status(502).send({ msg: 'The chat model is unavailable right now' });
+    return;
+  }
+
+  // Only save the messages once the model has replied, so a failed request
+  // doesn't leave an unanswered message in the history
+  const myMessage = { id: uuid.v4(), from: 'me', text: text };
+  const reply = { id: uuid.v4(), from: 'them', text: replyText };
+  chats[email] = [...history, myMessage, reply];
 
   res.send([myMessage, reply]);
 });
-
-// Stub reply until the LLM service is connected
-function getChatResponse(message) {
-  return { id: uuid.v4(), from: 'them', text: 'thanks for sharing!' };
-}
 
 
 async function createUser(email, password) {

@@ -38,6 +38,7 @@ function ChatWindow() {
   const [loadError, setLoadError] = React.useState('');
   const [sendError, setSendError] = React.useState('');
   const [draft, setDraft] = React.useState('');
+  const [sending, setSending] = React.useState(false);
   const scrollRef = React.useRef(null);
 
   // Load this user's chat history from the service when the page opens
@@ -54,14 +55,15 @@ function ChatWindow() {
   // Keep the newest message in view
   React.useEffect(() => {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-  }, [messages]);
+  }, [messages, sending]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     const text = draft.trim();
-    if (!text) return;
+    if (!text || sending) return;
 
     setSendError('');
+    setSending(true);
     try {
       // The service saves the message and returns [myMessage, reply]
       const res = await fetch('/api/chat', {
@@ -69,13 +71,18 @@ function ChatWindow() {
         body: JSON.stringify({ text: text }),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
       });
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.msg || `Request failed (${res.status})`);
+      }
 
       const newMessages = await res.json();
       setMessages((prev) => [...prev, ...newMessages]);
       setDraft('');
     } catch (err) {
       setSendError(`Couldn't send your message: ${err.message}`);
+    } finally {
+      setSending(false);
     }
   }
 
@@ -89,6 +96,7 @@ function ChatWindow() {
             {message.text}
           </div>
         ))}
+        {sending && <div className="bubble bubble-them text-mist-500">...</div>}
         {loadError && <p className="text-sm text-red-600">Couldn't load your messages: {loadError}</p>}
       </div>
 
@@ -101,7 +109,9 @@ function ChatWindow() {
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
         />
-        <button className="btn" type="submit">Send</button>
+        <button className="btn" type="submit" disabled={sending}>
+          {sending ? 'Sending...' : 'Send'}
+        </button>
       </form>
       {sendError && <p className="mt-2 text-sm text-red-600">{sendError}</p>}
     </section>
