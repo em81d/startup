@@ -10,6 +10,10 @@ const authCookieName = 'token';
 // In-memory user list until the database exists (resets when the server restarts)
 let users = [];
 
+// In-memory chat history until the database exists, keyed by user email:
+// { 'a@b.com': [ { id, from, text }, ... ] }
+let chats = {};
+
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.static('public'));
@@ -86,6 +90,34 @@ const verifyAuth = async (req, res, next) => {
 apiRouter.get('/progress', verifyAuth, async (req, res) => {
   res.send(getProgress(req.user.email));
 });
+
+// GetChat returns the logged-in user's chat messages
+apiRouter.get('/chat', verifyAuth, async (req, res) => {
+  res.send(chats[req.user.email] || []);
+});
+
+// SendChat saves the user's message, generates a reply, and returns both
+apiRouter.post('/chat', verifyAuth, async (req, res) => {
+  const text = req.body.text?.trim();
+  if (!text) {
+    res.status(400).send({ msg: 'Message text is required' });
+    return;
+  }
+
+  const myMessage = { id: uuid.v4(), from: 'me', text: text };
+  const reply = getChatResponse(text);
+
+  const email = req.user.email;
+  chats[email] = chats[email] || [];
+  chats[email].push(myMessage, reply);
+
+  res.send([myMessage, reply]);
+});
+
+// Stub reply until the LLM service is connected
+function getChatResponse(message) {
+  return { id: uuid.v4(), from: 'them', text: 'thanks for sharing!' };
+}
 
 
 async function createUser(email, password) {
