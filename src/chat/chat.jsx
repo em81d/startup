@@ -40,9 +40,21 @@ export function Chat({ userEmail }) {
 
 function ChatWindow({ userEmail }) {
   const storageKey = `chatMessages:${userEmail}`;
-  const [messages, setMessages] = React.useState(() => JSON.parse(localStorage.getItem(storageKey) || '[]'));
+  const [messages, setMessages] = React.useState([]);
+  const [loadError, setLoadError] = React.useState('');
   const [draft, setDraft] = React.useState('');
   const scrollRef = React.useRef(null);
+
+  // Load this user's chat history from the service when the page opens
+  React.useEffect(() => {
+    fetch('/api/chat')
+      .then((res) => {
+        if (!res.ok) throw new Error(`Request failed (${res.status})`);
+        return res.json();
+      })
+      .then(setMessages)
+      .catch((err) => setLoadError(err.message));
+  }, []);
 
   // Keep the newest message in view
   React.useEffect(() => {
@@ -76,6 +88,7 @@ function ChatWindow({ userEmail }) {
             {message.text}
           </div>
         ))}
+        {loadError && <p className="text-sm text-red-600">Couldn't load your messages: {loadError}</p>}
       </div>
 
       <form className="mt-4 flex gap-3" onSubmit={handleSubmit}>
