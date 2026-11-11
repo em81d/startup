@@ -2,9 +2,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
-// Starter word lists given to new users. (Step 5 renames the function in
-// stubProgress.js to getStarterProgress, and then this becomes a plain import.)
-const { getProgress: getStarterProgress } = require('./stubProgress');
+const { getStarterProgress } = require('./stubProgress'); // starter word lists for new users
 const { getChatResponse } = require('./chatModel');
 const DB = require('./database.js');
 const app = express();

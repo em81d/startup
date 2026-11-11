@@ -1,5 +1,5 @@
-// Placeholder progress data until the database exists.
-// Every user gets the same tables for now.
+// Starter vocab lists. When a user signs up, a copy of these is saved as their
+// progress in the database (see createUser in index.js).
 
 const knownWords = [
   { spanish: 'hola', english: 'hello' },
@@ -70,9 +70,9 @@ const futureWords = [
   { spanish: 'contratar', english: 'to hire' },
 ];
 
-// Later this will look up the user's progress in the database by email.
-function getProgress(email) {
+// Returns the starter lists for a new user
+function getStarterProgress() {
   return { known: knownWords, learning: learningWords, future: futureWords };
 }
 
-module.exports = { getProgress };
+module.exports = { getStarterProgress };
