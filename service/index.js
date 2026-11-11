@@ -101,7 +101,7 @@ apiRouter.post('/chat', verifyAuth, async (req, res) => {
   }
 
   const email = req.user.email;
-  const history = chats[email] || [];
+  const history = await DB.getChat(email);
 
   let replyText;
   try {
@@ -114,10 +114,16 @@ apiRouter.post('/chat', verifyAuth, async (req, res) => {
 
   // Only save the messages once the model has replied, so a failed request
   // doesn't leave an unanswered message in the history
-  const myMessage = { id: uuid.v4(), from: 'me', text: text };
-  const reply = { id: uuid.v4(), from: 'them', text: replyText };
-  chats[email] = [...history, myMessage, reply];
+  // The reply's timestamp is 1ms later so sorting by createdAt always puts it after the user's message
+  const now = Date.now();
+  const myMessage = { id: uuid.v4(), from: 'me', text: text, createdAt: new Date(now) };
+  const reply = { id: uuid.v4(), from: 'them', text: replyText, createdAt: new Date(now + 1) };
+  await DB.addChatMessages([
+    { ...myMessage, email: email },
+    { ...reply, email: email },
+  ]);
 
+  // Send the messages without the email field, matching what GET /api/chat returns
   res.send([myMessage, reply]);
 });
 
