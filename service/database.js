@@ -3,10 +3,10 @@ const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
-const db = client.db('simon');
+const db = client.db('chatty');
 const userCollection = db.collection('user');
-const scoreCollection = db.collection('score');
-const logCollection = db.collection('log');
+const chatCollection = db.collection('chat');
+const progressCollection = db.collection('progress');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -18,6 +18,8 @@ const logCollection = db.collection('log');
     process.exit(1);
   }
 })();
+
+// ----- Users -----
 
 function getUser(email) {
   return userCollection.findOne({ email: email });
@@ -39,22 +41,32 @@ async function updateUserRemoveAuth(user) {
   await userCollection.updateOne({ email: user.email }, { $unset: { token: 1 } });
 }
 
-async function addScore(score) {
-  return scoreCollection.insertOne(score);
-}
+// ----- Chat -----
 
-async function addLogEntry(entry) {
-  return logCollection.insertOne(entry);
-}
-
-function getHighScores() {
-  const query = { score: { $gt: 0, $lt: 900 } };
+// Returns the user's messages oldest first, as [{ id, from, text, createdAt }, ...]
+function getChat(email) {
   const options = {
-    sort: { score: -1 },
-    limit: 10,
+    sort: { createdAt: 1 },
+    projection: { _id: 0, email: 0 },
   };
-  const cursor = scoreCollection.find(query, options);
-  return cursor.toArray();
+  return chatCollection.find({ email: email }, options).toArray();
+}
+
+// messages: [{ id, email, from, text, createdAt }, ...]
+async function addChatMessages(messages) {
+  await chatCollection.insertMany(messages);
+}
+
+// ----- Progress -----
+
+// Returns { known, learning, future }, or null if the user has no progress yet
+function getProgress(email) {
+  return progressCollection.findOne({ email: email }, { projection: { _id: 0, email: 0 } });
+}
+
+// progress: { email, known, learning, future }
+async function addProgress(progress) {
+  await progressCollection.insertOne(progress);
 }
 
 module.exports = {
@@ -63,7 +75,8 @@ module.exports = {
   addUser,
   updateUser,
   updateUserRemoveAuth,
-  addScore,
-  getHighScores,
-  addLogEntry,
+  getChat,
+  addChatMessages,
+  getProgress,
+  addProgress,
 };
