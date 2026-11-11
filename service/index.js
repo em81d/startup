@@ -82,12 +82,14 @@ const verifyAuth = async (req, res, next) => {
 
 // GetProgress returns the logged-in user's vocab progress
 apiRouter.get('/progress', verifyAuth, async (req, res) => {
-  res.send(getProgress(req.user.email));
+  const progress = await DB.getProgress(req.user.email);
+  // Fall back to the starter lists for users who signed up before progress was saved
+  res.send(progress || getStarterProgress());
 });
 
 // GetChat returns the logged-in user's chat messages
 apiRouter.get('/chat', verifyAuth, async (req, res) => {
-  res.send(chats[req.user.email] || []);
+  res.send(await DB.getChat(req.user.email));
 });
 
 // SendChat saves the user's message, generates a reply, and returns both
