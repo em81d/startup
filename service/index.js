@@ -177,6 +177,12 @@ app.use(function (err, req, res, next) {
 
 
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+// Only start the server when this file is run directly (node index.js).
+// Tests import the app instead, so they can send requests without opening a port.
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+}
+
+module.exports = app;
