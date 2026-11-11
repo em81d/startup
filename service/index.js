@@ -2,24 +2,16 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
-const { getProgress } = require('./stubProgress');
+// Starter word lists given to new users. (Step 5 renames the function in
+// stubProgress.js to getStarterProgress, and then this becomes a plain import.)
+const { getProgress: getStarterProgress } = require('./stubProgress');
 const { getChatResponse } = require('./chatModel');
+const DB = require('./database.js');
 const app = express();
 
 const authCookieName = 'token';
 
-// In-memory user list until the database exists (resets when the server restarts)
-let users = [];
-
-// In-memory chat history until the database exists, keyed by user email:
-// { 'a@b.com': [ { id, from, text }, ... ] }
-let chats = {};
-
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-
-app.use(express.static('public'));
-
-
 
 // JSON body parsing using built-in middleware
 app.use(express.json());

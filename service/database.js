@@ -61,7 +61,7 @@ async function addChatMessages(messages) {
 
 // Returns { known, learning, future }, or null if the user has no progress yet
 function getProgress(email) {
-  return progressCollection.findOne({ email: email }, { projection: { _id: 0, email: 0 } });
+  return progressCollection.findOne({ email: email }, { projection: { _id: 0, email: 0 } });    //projection excludes the id and email fields
 }
 
 // progress: { email, known, learning, future }
